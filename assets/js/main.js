@@ -381,3 +381,29 @@ function humanize(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
 document.addEventListener("DOMContentLoaded", initExplorer);
 
 document.addEventListener("DOMContentLoaded", renderFigure6);
+
+/* BibTeX copy ------------------------------------------------------------ */
+document.addEventListener("DOMContentLoaded", () => {
+  for (const btn of document.querySelectorAll(".bibtex__copy")) {
+    btn.addEventListener("click", async () => {
+      const target = document.querySelector(btn.dataset.target);
+      if (!target) return;
+      try {
+        await navigator.clipboard.writeText(target.innerText);
+        const prev = btn.textContent;
+        btn.textContent = "Copied ✓";
+        btn.dataset.state = "copied";
+        setTimeout(() => {
+          btn.textContent = prev;
+          delete btn.dataset.state;
+        }, 1600);
+      } catch {
+        // Fallback: select the text so the user can ⌘C.
+        const range = document.createRange();
+        range.selectNodeContents(target);
+        const sel = window.getSelection();
+        sel.removeAllRanges(); sel.addRange(range);
+      }
+    });
+  }
+});
