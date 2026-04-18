@@ -1,4 +1,154 @@
 {
+  "figure6": {
+    "delta_trts": {
+      "eicu_los24": {
+        "enhanced_timeautodiff": {
+          "mean": 0.0029366352853505,
+          "std": 0.0015149398843998
+        },
+        "healthgen": {
+          "mean": 0.1344083082366031,
+          "std": 0.0026129147568469
+        },
+        "timeautodiff": {
+          "mean": 0.0262040576126873,
+          "std": 0.0016753136101233
+        },
+        "timediff": {
+          "mean": 0.0058392214266035,
+          "std": 0.0025819410691308
+        }
+      },
+      "eicu_mortality24": {
+        "enhanced_timeautodiff": {
+          "mean": 0.0137284554287741,
+          "std": 0.0067029688875236
+        },
+        "healthgen": {
+          "mean": 0.1908278891069142,
+          "std": 0.0037126038047997
+        },
+        "timeautodiff": {
+          "mean": 0.0388074322797679,
+          "std": 0.004862376660772
+        },
+        "timediff": {
+          "mean": 0.0187007001150327,
+          "std": 0.0034070162098226
+        }
+      },
+      "mimic_los24": {
+        "enhanced_timeautodiff": {
+          "mean": 0.0021081896713759,
+          "std": 0.0008988284415726
+        },
+        "healthgen": {
+          "mean": 0.0467631646120935,
+          "std": 0.0035671690451742
+        },
+        "timeautodiff": {
+          "mean": 0.006516950288015,
+          "std": 0.0034156634159475
+        },
+        "timediff": {
+          "mean": 0.0026103443788068,
+          "std": 0.0013495991162663
+        }
+      },
+      "mimic_mortality24": {
+        "enhanced_timeautodiff": {
+          "mean": 0.0062145908221847,
+          "std": 0.0036343807819187
+        },
+        "healthgen": {
+          "mean": 0.1310723304465935,
+          "std": 0.0059393601113257
+        },
+        "timeautodiff": {
+          "mean": 0.0172805675181998,
+          "std": 0.0035878191807721
+        },
+        "timediff": {
+          "mean": 0.0225952910209824,
+          "std": 0.0050530118278087
+        }
+      }
+    },
+    "delta_tstr": {
+      "eicu_los24": {
+        "enhanced_timeautodiff": {
+          "mean": 0.0082314049937799,
+          "std": 0.0014273733467685
+        },
+        "healthgen": {
+          "mean": 0.0907548595629168,
+          "std": 0.0077966998837982
+        },
+        "timeautodiff": {
+          "mean": 0.0097850242289127,
+          "std": 0.00174856878706
+        },
+        "timediff": {
+          "mean": 0.0051044190315104,
+          "std": 0.0017125664756289
+        }
+      },
+      "eicu_mortality24": {
+        "enhanced_timeautodiff": {
+          "mean": 0.0095974637514012,
+          "std": 0.0021319282521535
+        },
+        "healthgen": {
+          "mean": 0.0907728341011677,
+          "std": 0.0115044001713749
+        },
+        "timeautodiff": {
+          "mean": 0.0113878047597747,
+          "std": 0.0029357081923705
+        },
+        "timediff": {
+          "mean": 0.0033340718776521,
+          "std": 0.0017098587511983
+        }
+      },
+      "mimic_los24": {
+        "enhanced_timeautodiff": {
+          "mean": 0.004878093295639,
+          "std": 0.0026861275641438
+        },
+        "healthgen": {
+          "mean": 0.0613375563696145,
+          "std": 0.0043172056994531
+        },
+        "timeautodiff": {
+          "mean": 0.0057664526193452,
+          "std": 0.0031790028813547
+        },
+        "timediff": {
+          "mean": 0.00515285464806,
+          "std": 0.0034328933663302
+        }
+      },
+      "mimic_mortality24": {
+        "enhanced_timeautodiff": {
+          "mean": 0.0102740422129769,
+          "std": 0.0054793209550201
+        },
+        "healthgen": {
+          "mean": 0.0737839187367471,
+          "std": 0.0066697833401549
+        },
+        "timeautodiff": {
+          "mean": 0.0066493161664472,
+          "std": 0.0049069234882614
+        },
+        "timediff": {
+          "mean": 0.0086433606621611,
+          "std": 0.0060704227283989
+        }
+      }
+    }
+  },
   "figure6_health_gen_ranges": {
     "delta_trts": [
       0.13,
@@ -36,19 +186,103 @@
     }
   },
   "figure7_cis": {
-    "eicu_mortality24": {
+    "eicu_los24": {
+      "enhanced_timeautodiff": [
+        0.0195,
+        0.0368
+      ],
       "test": [
-        0.0344,
-        0.0867
+        0.012,
+        0.0409
       ],
       "timeautodiff": [
-        0.0332,
-        0.0803
+        0.0313,
+        0.0461
       ],
       "timediff": [
-        0.0319,
-        0.0843
+        0.0247,
+        0.0507
       ]
+    },
+    "eicu_mortality24": {
+      "enhanced_timeautodiff": [
+        0.0283,
+        0.06
+      ],
+      "test": [
+        0.0228,
+        0.0525
+      ],
+      "timeautodiff": [
+        0.0449,
+        0.0892
+      ],
+      "timediff": [
+        0.0441,
+        0.0879
+      ]
+    },
+    "mimic_los24": {
+      "enhanced_timeautodiff": [
+        0.0222,
+        0.0426
+      ],
+      "test": [
+        0.0208,
+        0.0796
+      ],
+      "timeautodiff": [
+        0.0223,
+        0.0515
+      ],
+      "timediff": [
+        0.0346,
+        0.0594
+      ]
+    },
+    "mimic_mortality24": {
+      "enhanced_timeautodiff": [
+        0.0441,
+        0.0886
+      ],
+      "test": [
+        0.0364,
+        0.0737
+      ],
+      "timeautodiff": [
+        0.0483,
+        0.1085
+      ],
+      "timediff": [
+        0.0463,
+        0.1467
+      ]
+    }
+  },
+  "figure7_points": {
+    "eicu_los24": {
+      "enhanced_timeautodiff": 0.0276,
+      "test": 0.0239,
+      "timeautodiff": 0.0385,
+      "timediff": 0.0365
+    },
+    "eicu_mortality24": {
+      "enhanced_timeautodiff": 0.0427,
+      "test": 0.0365,
+      "timeautodiff": 0.0654,
+      "timediff": 0.0644
+    },
+    "mimic_los24": {
+      "enhanced_timeautodiff": 0.0321,
+      "test": 0.0426,
+      "timeautodiff": 0.0352,
+      "timediff": 0.047
+    },
+    "mimic_mortality24": {
+      "enhanced_timeautodiff": 0.0644,
+      "test": 0.0536,
+      "timeautodiff": 0.0756,
+      "timediff": 0.0902
     }
   },
   "meta": {
