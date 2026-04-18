@@ -47,18 +47,20 @@ async function renderFigure7() {
       // Optional CI whisker
       let ciHTML = "";
       const ci = cis[method];
+      let valuePos = pct;
       if (ci && Array.isArray(ci) && ci.length === 2) {
         const loPct = Math.min(100, (ci[0] / axisMax) * 100);
         const hiPct = Math.min(100, (ci[1] / axisMax) * 100);
         ciHTML = `<div class="fig7-bar__ci" style="left:${loPct}%; right:${100 - hiPct}%;"
                        title="95% CI [${ci[0].toFixed(3)}–${ci[1].toFixed(3)}]"></div>`;
+        valuePos = Math.min(88, hiPct + 1);
       }
 
       const starHTML = v === minVal ? `<span class="fig7-bar__star" aria-hidden="true">★</span>` : "";
 
       bar.innerHTML = `
         <div class="fig7-bar__label">${FIG7_LABELS[method]}</div>
-        <div class="fig7-bar__track" style="--bar-pct:${pct}" title="error ${v.toFixed(3)}${ci ? ' · 95% CI ['+ci[0].toFixed(3)+'–'+ci[1].toFixed(3)+']' : ''}">
+        <div class="fig7-bar__track" style="--bar-pct:${pct}; --value-pos:${valuePos}" title="error ${v.toFixed(3)}${ci ? ' · 95% CI ['+ci[0].toFixed(3)+'–'+ci[1].toFixed(3)+']' : ''}">
           <div class="fig7-bar__fill" style="width:${pct}%">${starHTML}</div>
           ${ciHTML}
           <span class="fig7-bar__value">${v.toFixed(3)}</span>
@@ -89,31 +91,34 @@ document.addEventListener("DOMContentLoaded", () => {
 function enhanceTables() {
   for (const tbl of document.querySelectorAll('table[data-enhance="true"]')) {
     const rows = tbl.tBodies[0].rows;
-    const cols = {};
-    // Collect per-column values
+
     for (const row of rows) {
+      const valueCells = [];
       for (const cell of row.cells) {
-        const col = cell.dataset.col;
-        if (col == null) continue;
+        if (cell.dataset.col == null) continue;
         const v = parseFloat(cell.dataset.value);
-        cols[col] = cols[col] || [];
-        cols[col].push({ cell, v });
+        if (Number.isNaN(v)) continue;
+        const hdr = tbl.querySelector(`th[data-col="${cell.dataset.col}"]`);
+        const higherIsBetter = hdr && hdr.dataset.direction === "higher";
+        valueCells.push({ cell, v, higherIsBetter });
       }
-    }
-    // Per-column min / max + is-best + bar-pct
-    for (const col of Object.keys(cols)) {
-      const hdr = tbl.querySelector(`th[data-col="${col}"]`);
-      const higherIsBetter = (hdr && hdr.dataset.direction === "higher");
-      const values = cols[col].map(x => x.v);
-      const lo = Math.min(...values), hi = Math.max(...values);
+      if (!valueCells.length) continue;
+      // Assume all columns in the same row share a direction (typical case).
+      const higherIsBetter = valueCells[0].higherIsBetter;
+      const vals = valueCells.map(x => x.v);
+      const lo = Math.min(...vals), hi = Math.max(...vals);
       const best = higherIsBetter ? hi : lo;
-      for (const { cell, v } of cols[col]) {
-        const pct = Math.round(((v - lo) / (hi - lo || 1)) * 100);
+      for (const { cell, v } of valueCells) {
+        // Per-row normalization: full strip for best, proportional for others.
+        const pct = higherIsBetter
+          ? Math.round(((v - lo) / (hi - lo || 1)) * 100)
+          : Math.round(((hi - v) / (hi - lo || 1)) * 100);
         cell.style.setProperty("--bar-pct", pct.toString());
         if (v === best) cell.classList.add("is-best");
       }
     }
-    // Crosshair hover (row highlight + column highlight)
+
+    // Crosshair hover (unchanged behaviour — row + column)
     tbl.addEventListener("mouseover", (e) => {
       const cell = e.target.closest("td");
       if (!cell) return;
@@ -122,7 +127,7 @@ function enhanceTables() {
       });
       cell.parentElement.classList.add("is-hovered");
       const colIdx = cell.cellIndex;
-      for (const row of rows) row.cells[colIdx]?.classList.add("is-hovered-col");
+      for (const r of rows) r.cells[colIdx]?.classList.add("is-hovered-col");
     });
     tbl.addEventListener("mouseleave", () => {
       tbl.querySelectorAll(".is-hovered, .is-hovered-col").forEach(n => {
@@ -167,21 +172,25 @@ async function renderFigure6() {
         const pct = Math.min(100, (v / FIG6_MAX) * 100);
         const isBest = v === best;
         let ciHTML = "";
+        let valuePos = pct;
         if (err != null) {
           const lo = Math.max(0, v - err);
           const hi = Math.min(FIG6_MAX, v + err);
           const loPct = (lo / FIG6_MAX) * 100;
           const hiPct = (hi / FIG6_MAX) * 100;
           ciHTML = `<div class="fig6-row__ci" style="left:${loPct}%; right:${100 - hiPct}%;" title="±${err.toFixed(3)}"></div>`;
+          valuePos = Math.min(88, hiPct + 1);
         }
+        const starHTML = isBest ? `<span class="fig6-row__star" aria-hidden="true">★</span>` : "";
         const el = document.createElement("div");
         el.className = "fig6-row" + (isBest ? " is-best" : "");
+        el.dataset.method = method;
         el.innerHTML = `
           <div class="fig6-row__label">${FIG7_LABELS[method] || humanize(method)}</div>
-          <div class="fig6-row__track" style="--bar-pct:${pct}"
+          <div class="fig6-row__track" style="--bar-pct:${pct}; --value-pos:${valuePos}"
                title="value ${v.toFixed(3)}${err != null ? ' ± ' + err.toFixed(3) : ''}${truncated ? ' (truncated at 0.05)' : ''}">
             <div class="fig6-row__fill ${truncated ? 'fig6-row__fill--truncated' : ''}"
-                 style="background: var(--color-${method.replaceAll('_', '-')}); width:${pct}%"></div>
+                 style="background: var(--color-${method.replaceAll('_', '-')}); width:${pct}%">${starHTML}</div>
             ${ciHTML}
             <span class="fig6-row__value">${v.toFixed(3)}</span>
           </div>`;
@@ -347,11 +356,13 @@ function renderExplorer() {
     if (isBest) bar.classList.add("is-best");
 
     let ciHTML = "";
+    let valuePos = pct;
     if (mdata.ci && Array.isArray(mdata.ci) && mdata.ci.length === 2) {
       const loPct = Math.min(100, (mdata.ci[0] / axisMax) * 100);
       const hiPct = Math.min(100, (mdata.ci[1] / axisMax) * 100);
       ciHTML = `<div class="explorer__bar__ci" style="left:${loPct}%; right:${100 - hiPct}%;"
                      title="95% CI [${mdata.ci[0].toFixed(3)}–${mdata.ci[1].toFixed(3)}]"></div>`;
+      valuePos = Math.min(88, mdata.ci[1] / axisMax * 100 + 1);
     }
     const starHTML = isBest ? `<span class="explorer__bar__star" aria-hidden="true">★</span>` : "";
     const title = mdata.ci
@@ -360,7 +371,7 @@ function renderExplorer() {
 
     bar.innerHTML = `
       <div class="explorer__bar__label">${FIG7_LABELS[method] || humanize(method)}</div>
-      <div class="explorer__bar__track" style="--bar-pct:${pct}" title="${title}">
+      <div class="explorer__bar__track" style="--bar-pct:${pct}; --value-pos:${valuePos}" title="${title}">
         <div class="explorer__bar__fill" style="width:${pct}%">${starHTML}</div>
         ${ciHTML}
         <span class="explorer__bar__value">${mdata.error.toFixed(3)}</span>

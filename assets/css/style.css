@@ -269,7 +269,7 @@ pre  { font-family: var(--font-mono); background: var(--color-code-bg); padding:
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  left: calc(var(--bar-pct, 0) * 1% - 2px);
+  left: calc(var(--value-pos, var(--bar-pct, 0)) * 1% - 2px);
   padding-left: 6px;
   color: var(--color-ink);
   font-family: var(--font-mono); font-size: 0.8125rem;
@@ -417,7 +417,7 @@ pre  { font-family: var(--font-mono); background: var(--color-code-bg); padding:
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  left: calc(var(--bar-pct, 0) * 1% - 2px);
+  left: calc(var(--value-pos, var(--bar-pct, 0)) * 1% - 2px);
   padding-left: 6px;
   color: var(--color-ink);
   font-family: var(--font-mono); font-size: 0.8125rem;
@@ -522,7 +522,7 @@ pre  { font-family: var(--font-mono); background: var(--color-code-bg); padding:
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  left: calc(var(--bar-pct, 0) * 1% - 2px);
+  left: calc(var(--value-pos, var(--bar-pct, 0)) * 1% - 2px);
   padding-left: 6px;
   color: var(--color-ink);
   font-family: var(--font-mono); font-size: 0.8125rem;
@@ -591,3 +591,12 @@ pre  { font-family: var(--font-mono); background: var(--color-code-bg); padding:
 }
 /* Remove focus outline from mouse-only interactions */
 :focus:not(:focus-visible) { outline: none; }
+
+/* Figure 6 winner star ----------------------------------------------------- */
+.fig6-row__star {
+  position: absolute;
+  left: 6px; top: 50%; transform: translateY(-50%);
+  color: #fff; font-size: 0.875rem; line-height: 1;
+  pointer-events: none;
+}
+.fig6-row[data-method="healthgen"].is-best .fig6-row__star { color: #fff; }
