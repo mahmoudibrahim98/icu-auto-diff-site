@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://mahmoudibrahim98.github.io/icu-auto-diff-site/sitemap.xml
