@@ -30,9 +30,84 @@
 </head>
 <body>
   <main>
-    <header class="hero" id="hero"><!-- Task 7 --></header>
-    <section id="summary" class="section"><!-- Task 8 --></section>
-    <section id="abstract" class="section"><!-- Task 8 --></section>
+    <header class="hero" id="hero">
+  <p class="hero__venue">SynDAiTE Workshop · ECML PKDD 2025</p>
+
+  <h1 class="hero__title">
+    Enabling Granular Subgroup Level Model Evaluations<br>
+    by Generating Synthetic Medical Time Series
+  </h1>
+
+  <p class="hero__authors">
+    <span><a href="mailto:mahmoud.ibrahim@vito.be">Mahmoud Ibrahim</a><sup>1,2,3</sup></span>,
+    <span>Bart Elen<sup>3</sup></span>,
+    <span>Chang Sun<sup>1,2</sup></span>,
+    <span>Gökhan Ertaylan<sup>3</sup></span>,
+    <span>Michel Dumontier<sup>1,2</sup></span>
+  </p>
+
+  <ol class="hero__affiliations">
+    <li><sup>1</sup> Institute of Data Science, Maastricht University</li>
+    <li><sup>2</sup> Department of Advanced Computing Sciences, Maastricht University</li>
+    <li><sup>3</sup> VITO, Belgium</li>
+  </ol>
+
+  <nav class="resources" aria-label="Paper resources">
+    <a class="resources__pill" href="https://arxiv.org/abs/2510.19728" target="_blank" rel="noopener">
+      <svg class="pill__icon" aria-hidden="true" viewBox="0 0 24 24" width="16" height="16"
+           fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+        <polyline points="14 2 14 8 20 8"/>
+        <line x1="8" y1="13" x2="16" y2="13"/>
+        <line x1="8" y1="17" x2="16" y2="17"/>
+      </svg>
+      <span class="pill__label">Paper (arXiv)</span>
+    </a>
+    <a class="resources__pill" href="https://github.com/mahmoudibrahim98/icu-auto-diff" target="_blank" rel="noopener">
+      <svg class="pill__icon" aria-hidden="true" viewBox="0 0 24 24" width="16" height="16">
+        <path fill="currentColor" d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2.1c-3.3.7-4-1.4-4-1.4-.5-1.4-1.3-1.8-1.3-1.8-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.3 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.4 11.4 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.7.2 2.9.1 3.2.8.9 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .3"/>
+      </svg>
+      <span class="pill__label">Code (GitHub)</span>
+    </a>
+  </nav>
+</header>
+
+    <section id="summary" class="section summary">
+  <h2>Summary</h2>
+  <p class="lede">
+    Clinical ML models are usually evaluated on whatever real test data is
+    available — which leaves minority subgroups with dozens of samples and
+    wildly uncertain metrics. We show how to train generative models whose
+    synthetic cohorts are trustworthy enough to serve as the test set itself,
+    even for fine-grained demographic intersections.
+  </p>
+</section>
+
+    <section id="abstract" class="section">
+  <h2>Abstract</h2>
+  <p>
+    We present a novel framework for leveraging synthetic ICU time-series data
+    not only to train but also to rigorously and trustworthily evaluate
+    predictive models, both at the population level and within fine-grained
+    demographic subgroups. Building on prior diffusion and VAE-based generators
+    (TimeDiff, HealthGen, TimeAutoDiff), we introduce <em>Enhanced
+    TimeAutoDiff</em>, which augments the latent diffusion objective with
+    distribution-alignment penalties. We extensively benchmark all models on
+    MIMIC-III and eICU, on 24-hour mortality and binary length-of-stay tasks.
+    Our results show that Enhanced TimeAutoDiff reduces the gap between
+    real-on-synthetic and real-on-real evaluation (TRTS gap) by over 70%,
+    achieving ΔTRTS ≤ 0.014 AUROC, while preserving training utility (ΔTSTR ≈
+    0.01). Crucially, for 32 intersectional subgroups, large synthetic cohorts
+    cut subgroup-level AUROC estimation error by up to 50% relative to small
+    real test sets, and outperform them in 72–84% of subgroups. This work
+    provides a practical, privacy-preserving roadmap for trustworthy, granular
+    model evaluation in critical care, enabling robust and reliable
+    performance analysis across diverse patient populations without exposing
+    sensitive EHR data, contributing to the overall trustworthiness of Medical
+    AI.
+  </p>
+</section>
+
     <section id="method" class="section"><!-- Task 9 --></section>
     <section id="results" class="section">
       <div id="figure7"><!-- Task 10 --></div>
