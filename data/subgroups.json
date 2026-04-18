@@ -1,0 +1,3379 @@
+{
+  "eicu_los24": {
+    "age_31-50": {
+      "female": {
+        "asian": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        },
+        "black": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        },
+        "other": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        },
+        "white": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        }
+      },
+      "male": {
+        "asian": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        },
+        "black": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        },
+        "other": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        },
+        "white": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        }
+      }
+    },
+    "age_51-70": {
+      "female": {
+        "asian": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        },
+        "black": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        },
+        "other": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        },
+        "white": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        }
+      },
+      "male": {
+        "asian": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        },
+        "black": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        },
+        "other": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        },
+        "white": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        }
+      }
+    },
+    "age_<30": {
+      "female": {
+        "asian": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        },
+        "black": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        },
+        "other": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        },
+        "white": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        }
+      },
+      "male": {
+        "asian": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        },
+        "black": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        },
+        "other": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        },
+        "white": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        }
+      }
+    },
+    "age_>70": {
+      "female": {
+        "asian": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        },
+        "black": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        },
+        "other": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        },
+        "white": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        }
+      },
+      "male": {
+        "asian": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        },
+        "black": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        },
+        "other": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        },
+        "white": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        }
+      }
+    }
+  },
+  "eicu_mortality24": {
+    "age_31-50": {
+      "female": {
+        "asian": {
+          "auroc_groundtruth": 0.7541,
+          "auroc_groundtruth_ci": [
+            0.7422,
+            0.7655
+          ],
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "ci": [
+                0.0697,
+                0.1788
+              ],
+              "error": 0.125
+            },
+            "timeautodiff": {
+              "ci": [
+                0.0252,
+                0.0093
+              ],
+              "error": 0.0078
+            },
+            "timediff": {
+              "ci": [
+                0.0353,
+                0.0192
+              ],
+              "error": 0.0271
+            }
+          },
+          "n_real": 125
+        },
+        "black": {
+          "auroc_groundtruth": 0.7796,
+          "auroc_groundtruth_ci": [
+            0.7756,
+            0.7837
+          ],
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "ci": [
+                0.0128,
+                0.0092
+              ],
+              "error": 0.0017
+            },
+            "timeautodiff": {
+              "ci": [
+                0.0166,
+                0.0285
+              ],
+              "error": 0.0224
+            },
+            "timediff": {
+              "ci": [
+                0.0235,
+                0.0067
+              ],
+              "error": 0.0153
+            }
+          },
+          "n_real": 125
+        },
+        "other": {
+          "auroc_groundtruth": 0.8104,
+          "auroc_groundtruth_ci": [
+            0.8086,
+            0.8123
+          ],
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "ci": [
+                0.111,
+                0.0924
+              ],
+              "error": 0.102
+            },
+            "timeautodiff": {
+              "ci": [
+                0.0454,
+                0.067
+              ],
+              "error": 0.0563
+            },
+            "timediff": {
+              "ci": [
+                0.032,
+                0.0476
+              ],
+              "error": 0.0398
+            }
+          },
+          "n_real": 125
+        },
+        "white": {
+          "auroc_groundtruth": 0.7941,
+          "auroc_groundtruth_ci": [
+            0.7925,
+            0.7956
+          ],
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "ci": [
+                0.0187,
+                0.0068
+              ],
+              "error": 0.0128
+            },
+            "timeautodiff": {
+              "ci": [
+                0.0376,
+                0.0457
+              ],
+              "error": 0.0416
+            },
+            "timediff": {
+              "ci": [
+                0.0074,
+                0.0119
+              ],
+              "error": 0.0096
+            }
+          },
+          "n_real": 125
+        }
+      },
+      "male": {
+        "asian": {
+          "auroc_groundtruth": 0.9842,
+          "auroc_groundtruth_ci": [
+            0.9822,
+            0.9862
+          ],
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "ci": [
+                0.213,
+                0.2763
+              ],
+              "error": 0.2448
+            },
+            "timediff": {
+              "ci": [
+                0.2631,
+                0.2964
+              ],
+              "error": 0.2801
+            }
+          },
+          "n_real": 0
+        },
+        "black": {
+          "auroc_groundtruth": 0.8601,
+          "auroc_groundtruth_ci": [
+            0.8557,
+            0.8645
+          ],
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "ci": [
+                0.0321,
+                0.0023
+              ],
+              "error": 0.0157
+            },
+            "timeautodiff": {
+              "ci": [
+                0.0805,
+                0.0981
+              ],
+              "error": 0.0891
+            },
+            "timediff": {
+              "ci": [
+                0.0544,
+                0.0768
+              ],
+              "error": 0.0652
+            }
+          },
+          "n_real": 125
+        },
+        "other": {
+          "auroc_groundtruth": 0.8226,
+          "auroc_groundtruth_ci": [
+            0.817,
+            0.8278
+          ],
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "ci": [
+                0.0666,
+                0.129
+              ],
+              "error": 0.0985
+            },
+            "timeautodiff": {
+              "ci": [
+                0.0384,
+                0.0625
+              ],
+              "error": 0.0498
+            },
+            "timediff": {
+              "ci": [
+                0.0322,
+                0.0417
+              ],
+              "error": 0.0369
+            }
+          },
+          "n_real": 125
+        },
+        "white": {
+          "auroc_groundtruth": 0.7461,
+          "auroc_groundtruth_ci": [
+            0.7435,
+            0.7487
+          ],
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "ci": [
+                0.0469,
+                0.0221
+              ],
+              "error": 0.0343
+            },
+            "timeautodiff": {
+              "ci": [
+                0.0007,
+                0.0116
+              ],
+              "error": 0.0062
+            },
+            "timediff": {
+              "ci": [
+                0.0317,
+                0.0225
+              ],
+              "error": 0.0273
+            }
+          },
+          "n_real": 125
+        }
+      }
+    },
+    "age_51-70": {
+      "female": {
+        "asian": {
+          "auroc_groundtruth": 0.8328,
+          "auroc_groundtruth_ci": [
+            0.8286,
+            0.837
+          ],
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "ci": [
+                0.081,
+                0.0552
+              ],
+              "error": 0.068
+            },
+            "timeautodiff": {
+              "ci": [
+                0.0472,
+                0.0833
+              ],
+              "error": 0.0641
+            },
+            "timediff": {
+              "ci": [
+                0.169,
+                0.1831
+              ],
+              "error": 0.1761
+            }
+          },
+          "n_real": 125
+        },
+        "black": {
+          "auroc_groundtruth": 0.7505,
+          "auroc_groundtruth_ci": [
+            0.748,
+            0.7529
+          ],
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "ci": [
+                0.0371,
+                0.0087
+              ],
+              "error": 0.0229
+            },
+            "timeautodiff": {
+              "ci": [
+                0.0002,
+                0.0101
+              ],
+              "error": 0.005
+            },
+            "timediff": {
+              "ci": [
+                0.0467,
+                0.055
+              ],
+              "error": 0.0508
+            }
+          },
+          "n_real": 125
+        },
+        "other": {
+          "auroc_groundtruth": 0.7372,
+          "auroc_groundtruth_ci": [
+            0.736,
+            0.7384
+          ],
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "ci": [
+                0.0031,
+                0.0163
+              ],
+              "error": 0.0064
+            },
+            "timeautodiff": {
+              "ci": [
+                0.0119,
+                0.0012
+              ],
+              "error": 0.0065
+            },
+            "timediff": {
+              "ci": [
+                0.0854,
+                0.0807
+              ],
+              "error": 0.083
+            }
+          },
+          "n_real": 125
+        },
+        "white": {
+          "auroc_groundtruth": 0.7711,
+          "auroc_groundtruth_ci": [
+            0.7704,
+            0.7718
+          ],
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "ci": [
+                0.0342,
+                0.0288
+              ],
+              "error": 0.0316
+            },
+            "timeautodiff": {
+              "ci": [
+                0.0186,
+                0.0221
+              ],
+              "error": 0.0204
+            },
+            "timediff": {
+              "ci": [
+                0.0045,
+                0.0103
+              ],
+              "error": 0.0073
+            }
+          },
+          "n_real": 125
+        }
+      },
+      "male": {
+        "asian": {
+          "auroc_groundtruth": 0.7938,
+          "auroc_groundtruth_ci": [
+            0.7911,
+            0.7962
+          ],
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "ci": [
+                0.1762,
+                0.2119
+              ],
+              "error": 0.1938
+            },
+            "timeautodiff": {
+              "ci": [
+                0.0436,
+                0.0844
+              ],
+              "error": 0.0639
+            },
+            "timediff": {
+              "ci": [
+                0.0563,
+                0.0878
+              ],
+              "error": 0.0712
+            }
+          },
+          "n_real": 75
+        },
+        "black": {
+          "auroc_groundtruth": 0.7178,
+          "auroc_groundtruth_ci": [
+            0.7154,
+            0.72
+          ],
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "ci": [
+                0.0464,
+                0.0264
+              ],
+              "error": 0.0369
+            },
+            "timeautodiff": {
+              "ci": [
+                0.0199,
+                0.0064
+              ],
+              "error": 0.013
+            },
+            "timediff": {
+              "ci": [
+                0.0101,
+                0.0031
+              ],
+              "error": 0.0036
+            }
+          },
+          "n_real": 125
+        },
+        "other": {
+          "auroc_groundtruth": 0.7455,
+          "auroc_groundtruth_ci": [
+            0.7405,
+            0.7506
+          ],
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "ci": [
+                0.0684,
+                0.0219
+              ],
+              "error": 0.0458
+            },
+            "timeautodiff": {
+              "ci": [
+                0.0145,
+                0.0249
+              ],
+              "error": 0.0196
+            },
+            "timediff": {
+              "ci": [
+                0.0011,
+                0.0082
+              ],
+              "error": 0.0035
+            }
+          },
+          "n_real": 125
+        },
+        "white": {
+          "auroc_groundtruth": 0.7575,
+          "auroc_groundtruth_ci": [
+            0.7567,
+            0.7583
+          ],
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "ci": [
+                0.0043,
+                0.0153
+              ],
+              "error": 0.0098
+            },
+            "timeautodiff": {
+              "ci": [
+                0.0263,
+                0.0309
+              ],
+              "error": 0.0286
+            },
+            "timediff": {
+              "ci": [
+                0.0227,
+                0.017
+              ],
+              "error": 0.0198
+            }
+          },
+          "n_real": 125
+        }
+      }
+    },
+    "age_<30": {
+      "female": {
+        "asian": {
+          "auroc_groundtruth": 1.0,
+          "auroc_groundtruth_ci": [
+            1.0,
+            1.0
+          ],
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "ci": [
+                0.2056,
+                0.2765
+              ],
+              "error": 0.2405
+            },
+            "timediff": {
+              "ci": [
+                0.1587,
+                0.2296
+              ],
+              "error": 0.1933
+            }
+          },
+          "n_real": 0
+        },
+        "black": {
+          "auroc_groundtruth": 0.7637,
+          "auroc_groundtruth_ci": [
+            0.7565,
+            0.7714
+          ],
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "ci": [
+                0.2338,
+                0.225
+              ],
+              "error": 0.23
+            },
+            "timeautodiff": {
+              "ci": [
+                0.0776,
+                0.0491
+              ],
+              "error": 0.0632
+            },
+            "timediff": {
+              "ci": [
+                0.0386,
+                0.0102
+              ],
+              "error": 0.0239
+            }
+          },
+          "n_real": 25
+        },
+        "other": {
+          "auroc_groundtruth": 0.769,
+          "auroc_groundtruth_ci": [
+            0.7634,
+            0.7751
+          ],
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "ci": [
+                0.0093,
+                0.0296
+              ],
+              "error": 0.009
+            },
+            "timeautodiff": {
+              "ci": [
+                0.0227,
+                0.0071
+              ],
+              "error": 0.0083
+            },
+            "timediff": {
+              "ci": [
+                0.0269,
+                0.0088
+              ],
+              "error": 0.0096
+            }
+          },
+          "n_real": 125
+        },
+        "white": {
+          "auroc_groundtruth": 0.8369,
+          "auroc_groundtruth_ci": [
+            0.8345,
+            0.8396
+          ],
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "ci": [
+                0.0337,
+                0.0113
+              ],
+              "error": 0.0228
+            },
+            "timeautodiff": {
+              "ci": [
+                0.012,
+                0.0025
+              ],
+              "error": 0.0073
+            },
+            "timediff": {
+              "ci": [
+                0.0099,
+                0.0224
+              ],
+              "error": 0.0165
+            }
+          },
+          "n_real": 125
+        }
+      },
+      "male": {
+        "asian": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "single_class"
+            },
+            "healthgen": {
+              "status": "single_class"
+            },
+            "test": {
+              "status": "single_class"
+            },
+            "timeautodiff": {
+              "status": "single_class"
+            },
+            "timediff": {
+              "status": "single_class"
+            }
+          },
+          "n_real": 0
+        },
+        "black": {
+          "auroc_groundtruth": 0.6313,
+          "auroc_groundtruth_ci": [
+            0.6278,
+            0.6347
+          ],
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "ci": [
+                0.2823,
+                0.325
+              ],
+              "error": 0.3046
+            },
+            "timeautodiff": {
+              "ci": [
+                0.2068,
+                0.1651
+              ],
+              "error": 0.186
+            },
+            "timediff": {
+              "ci": [
+                0.2699,
+                0.2426
+              ],
+              "error": 0.2568
+            }
+          },
+          "n_real": 100
+        },
+        "other": {
+          "auroc_groundtruth": 0.8931,
+          "auroc_groundtruth_ci": [
+            0.889,
+            0.897
+          ],
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "ci": [
+                0.066,
+                0.0517
+              ],
+              "error": 0.0591
+            },
+            "timeautodiff": {
+              "ci": [
+                0.1421,
+                0.2105
+              ],
+              "error": 0.1758
+            },
+            "timediff": {
+              "ci": [
+                0.1383,
+                0.1763
+              ],
+              "error": 0.1578
+            }
+          },
+          "n_real": 100
+        },
+        "white": {
+          "auroc_groundtruth": 0.7653,
+          "auroc_groundtruth_ci": [
+            0.762,
+            0.7688
+          ],
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "ci": [
+                0.0383,
+                0.0197
+              ],
+              "error": 0.0288
+            },
+            "timeautodiff": {
+              "ci": [
+                0.0758,
+                0.0585
+              ],
+              "error": 0.0672
+            },
+            "timediff": {
+              "ci": [
+                0.0265,
+                0.0091
+              ],
+              "error": 0.0182
+            }
+          },
+          "n_real": 125
+        }
+      }
+    },
+    "age_>70": {
+      "female": {
+        "asian": {
+          "auroc_groundtruth": 0.7633,
+          "auroc_groundtruth_ci": [
+            0.76,
+            0.7666
+          ],
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "ci": [
+                0.0399,
+                0.0712
+              ],
+              "error": 0.0556
+            },
+            "timeautodiff": {
+              "ci": [
+                0.0147,
+                0.0409
+              ],
+              "error": 0.0284
+            },
+            "timediff": {
+              "ci": [
+                0.0088,
+                0.0055
+              ],
+              "error": 0.0019
+            }
+          },
+          "n_real": 125
+        },
+        "black": {
+          "auroc_groundtruth": 0.7047,
+          "auroc_groundtruth_ci": [
+            0.7024,
+            0.7071
+          ],
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "ci": [
+                0.0438,
+                0.0229
+              ],
+              "error": 0.033
+            },
+            "timeautodiff": {
+              "ci": [
+                0.0032,
+                0.0191
+              ],
+              "error": 0.0112
+            },
+            "timediff": {
+              "ci": [
+                0.0546,
+                0.0389
+              ],
+              "error": 0.0464
+            }
+          },
+          "n_real": 125
+        },
+        "other": {
+          "auroc_groundtruth": 0.782,
+          "auroc_groundtruth_ci": [
+            0.7784,
+            0.7854
+          ],
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "ci": [
+                0.0233,
+                0.0021
+              ],
+              "error": 0.0104
+            },
+            "timeautodiff": {
+              "ci": [
+                0.0095,
+                0.0219
+              ],
+              "error": 0.0158
+            },
+            "timediff": {
+              "ci": [
+                0.018,
+                0.0319
+              ],
+              "error": 0.025
+            }
+          },
+          "n_real": 125
+        },
+        "white": {
+          "auroc_groundtruth": 0.7303,
+          "auroc_groundtruth_ci": [
+            0.7299,
+            0.7307
+          ],
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "ci": [
+                0.0113,
+                0.0154
+              ],
+              "error": 0.0134
+            },
+            "timeautodiff": {
+              "ci": [
+                0.0104,
+                0.0148
+              ],
+              "error": 0.0126
+            },
+            "timediff": {
+              "ci": [
+                0.0049,
+                0.0022
+              ],
+              "error": 0.0035
+            }
+          },
+          "n_real": 125
+        }
+      },
+      "male": {
+        "asian": {
+          "auroc_groundtruth": 0.7695,
+          "auroc_groundtruth_ci": [
+            0.7632,
+            0.7758
+          ],
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "ci": [
+                0.1003,
+                0.0479
+              ],
+              "error": 0.0758
+            },
+            "timeautodiff": {
+              "ci": [
+                0.0737,
+                0.1022
+              ],
+              "error": 0.0881
+            },
+            "timediff": {
+              "ci": [
+                0.0052,
+                0.0023
+              ],
+              "error": 0.0015
+            }
+          },
+          "n_real": 125
+        },
+        "black": {
+          "auroc_groundtruth": 0.7689,
+          "auroc_groundtruth_ci": [
+            0.7652,
+            0.7726
+          ],
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "ci": [
+                0.0049,
+                0.0332
+              ],
+              "error": 0.0134
+            },
+            "timeautodiff": {
+              "ci": [
+                0.0389,
+                0.0517
+              ],
+              "error": 0.0454
+            },
+            "timediff": {
+              "ci": [
+                0.0582,
+                0.0698
+              ],
+              "error": 0.0639
+            }
+          },
+          "n_real": 125
+        },
+        "other": {
+          "auroc_groundtruth": 0.6979,
+          "auroc_groundtruth_ci": [
+            0.6925,
+            0.703
+          ],
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "ci": [
+                0.0173,
+                0.0134
+              ],
+              "error": 0.0015
+            },
+            "timeautodiff": {
+              "ci": [
+                0.0289,
+                0.0164
+              ],
+              "error": 0.0226
+            },
+            "timediff": {
+              "ci": [
+                0.0075,
+                0.0016
+              ],
+              "error": 0.0029
+            }
+          },
+          "n_real": 125
+        },
+        "white": {
+          "auroc_groundtruth": 0.7149,
+          "auroc_groundtruth_ci": [
+            0.714,
+            0.7157
+          ],
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "ci": [
+                0.0182,
+                0.0241
+              ],
+              "error": 0.0211
+            },
+            "timeautodiff": {
+              "ci": [
+                0.0065,
+                0.0109
+              ],
+              "error": 0.0087
+            },
+            "timediff": {
+              "ci": [
+                0.0125,
+                0.0162
+              ],
+              "error": 0.0144
+            }
+          },
+          "n_real": 125
+        }
+      }
+    }
+  },
+  "mimic_los24": {
+    "age_31-50": {
+      "female": {
+        "asian": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        },
+        "black": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        },
+        "other": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        },
+        "white": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        }
+      },
+      "male": {
+        "asian": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        },
+        "black": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        },
+        "other": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        },
+        "white": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        }
+      }
+    },
+    "age_51-70": {
+      "female": {
+        "asian": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        },
+        "black": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        },
+        "other": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        },
+        "white": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        }
+      },
+      "male": {
+        "asian": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        },
+        "black": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        },
+        "other": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        },
+        "white": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        }
+      }
+    },
+    "age_<30": {
+      "female": {
+        "asian": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        },
+        "black": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        },
+        "other": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        },
+        "white": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        }
+      },
+      "male": {
+        "asian": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        },
+        "black": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        },
+        "other": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        },
+        "white": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        }
+      }
+    },
+    "age_>70": {
+      "female": {
+        "asian": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        },
+        "black": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        },
+        "other": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        },
+        "white": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        }
+      },
+      "male": {
+        "asian": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        },
+        "black": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        },
+        "other": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        },
+        "white": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        }
+      }
+    }
+  },
+  "mimic_mortality24": {
+    "age_31-50": {
+      "female": {
+        "asian": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        },
+        "black": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        },
+        "other": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        },
+        "white": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        }
+      },
+      "male": {
+        "asian": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        },
+        "black": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        },
+        "other": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        },
+        "white": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        }
+      }
+    },
+    "age_51-70": {
+      "female": {
+        "asian": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        },
+        "black": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        },
+        "other": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        },
+        "white": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        }
+      },
+      "male": {
+        "asian": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        },
+        "black": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        },
+        "other": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        },
+        "white": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        }
+      }
+    },
+    "age_<30": {
+      "female": {
+        "asian": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        },
+        "black": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        },
+        "other": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        },
+        "white": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        }
+      },
+      "male": {
+        "asian": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        },
+        "black": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        },
+        "other": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        },
+        "white": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        }
+      }
+    },
+    "age_>70": {
+      "female": {
+        "asian": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        },
+        "black": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        },
+        "other": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        },
+        "white": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        }
+      },
+      "male": {
+        "asian": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        },
+        "black": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        },
+        "other": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        },
+        "white": {
+          "auroc_groundtruth": null,
+          "auroc_groundtruth_ci": null,
+          "methods": {
+            "enhanced_timeautodiff": {
+              "status": "not_exported"
+            },
+            "healthgen": {
+              "status": "not_exported"
+            },
+            "test": {
+              "status": "not_exported"
+            },
+            "timeautodiff": {
+              "status": "not_exported"
+            },
+            "timediff": {
+              "status": "not_exported"
+            }
+          },
+          "n_real": 0
+        }
+      }
+    }
+  }
+}
