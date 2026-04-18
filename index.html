@@ -227,7 +227,54 @@
   </p>
   <div class="fig6-grid" data-component="figure6"></div>
 </div>
-      <div id="subgroup-explorer"><!-- Task 13 and 14 --></div>
+      <div id="subgroup-explorer" class="results-block explorer" data-component="explorer">
+  <h2>Subgroup Explorer</h2>
+  <p class="results-block__lede">
+    Pick any demographic intersection and see how accurately each generator's
+    synthetic cohort reproduces the model's performance on that subgroup's
+    large real pool. Smaller bars = smaller error = more trustworthy evaluation.
+  </p>
+
+  <nav class="explorer__tabs" role="tablist" aria-label="Data × Task">
+    <button type="button" role="tab" data-task="eicu_mortality24" class="explorer__tab">eICU · Mortality 24h</button>
+    <button type="button" role="tab" data-task="eicu_los24"       class="explorer__tab">eICU · LOS&gt;3d</button>
+    <button type="button" role="tab" data-task="mimic_mortality24" class="explorer__tab">MIMIC-III · Mortality 24h</button>
+    <button type="button" role="tab" data-task="mimic_los24"       class="explorer__tab">MIMIC-III · LOS&gt;3d</button>
+  </nav>
+
+  <fieldset class="explorer__picker">
+    <legend class="explorer__picker-title">Age bracket</legend>
+    <div class="pillset" data-axis="age" role="group" aria-label="Age bracket">
+      <button type="button" class="pill" data-value="age_<30">&lt; 30</button>
+      <button type="button" class="pill" data-value="age_31-50">31–50</button>
+      <button type="button" class="pill" data-value="age_51-70">51–70</button>
+      <button type="button" class="pill" data-value="age_>70">&gt; 70</button>
+    </div>
+  </fieldset>
+
+  <fieldset class="explorer__picker">
+    <legend class="explorer__picker-title">Sex</legend>
+    <div class="pillset" data-axis="sex" role="group" aria-label="Sex">
+      <button type="button" class="pill" data-value="male">Male</button>
+      <button type="button" class="pill" data-value="female">Female</button>
+    </div>
+  </fieldset>
+
+  <fieldset class="explorer__picker">
+    <legend class="explorer__picker-title">Ethnicity</legend>
+    <div class="pillset" data-axis="ethnicity" role="group" aria-label="Ethnicity">
+      <button type="button" class="pill" data-value="white">White</button>
+      <button type="button" class="pill" data-value="black">Black</button>
+      <button type="button" class="pill" data-value="asian">Asian</button>
+      <button type="button" class="pill" data-value="other">Other</button>
+    </div>
+  </fieldset>
+
+  <div class="explorer__readout" data-component="explorer-readout">
+    <div class="explorer__summary"></div>
+    <div class="explorer__bars"></div>
+  </div>
+</div>
     </section>
     <section id="bibtex" class="section"><!-- Task 15 --></section>
   </main>

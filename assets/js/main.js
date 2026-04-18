@@ -203,4 +203,181 @@ function pickEnhanced(task, panel) {
   return map[panel][task];
 }
 
+/* Subgroup Explorer ------------------------------------------------------ */
+const EXPLORER_STATE = {
+  data: null,                       // loaded subgroups.json
+  task: "eicu_mortality24",
+  age: "age_<30",
+  sex: "male",
+  ethnicity: "white",
+};
+
+const EXPLORER_METHOD_ORDER = [
+  "test", "timeautodiff", "timediff", "enhanced_timeautodiff", "healthgen"
+];
+
+async function initExplorer() {
+  const root = document.querySelector('[data-component="explorer"]');
+  if (!root) return;
+  EXPLORER_STATE.data = await fetch("data/subgroups.json").then(r => r.json());
+
+  // Disable tabs without data
+  for (const tab of root.querySelectorAll(".explorer__tab")) {
+    const t = tab.dataset.task;
+    const hasData = hasAnyRealBar(t);
+    tab.disabled = !hasData;
+    if (!hasData) tab.title = "Data aggregation pending";
+  }
+
+  // Initialize tab/pill selection
+  setTabSelected(root, EXPLORER_STATE.task);
+  for (const axis of ["age", "sex", "ethnicity"]) {
+    const current = EXPLORER_STATE[axis];
+    const set = root.querySelector(`[data-axis="${axis}"]`);
+    for (const pill of set.querySelectorAll(".pill")) {
+      pill.setAttribute("aria-pressed",
+        pill.dataset.value === current ? "true" : "false");
+    }
+  }
+
+  // Event wiring
+  root.addEventListener("click", (e) => {
+    const tab = e.target.closest(".explorer__tab");
+    if (tab && !tab.disabled) {
+      EXPLORER_STATE.task = tab.dataset.task;
+      setTabSelected(root, EXPLORER_STATE.task);
+      renderExplorer();
+      return;
+    }
+    const pill = e.target.closest(".pill");
+    if (pill) {
+      const axis = pill.parentElement.dataset.axis;
+      EXPLORER_STATE[axis] = pill.dataset.value;
+      for (const p of pill.parentElement.children) {
+        p.setAttribute("aria-pressed", p === pill ? "true" : "false");
+      }
+      renderExplorer();
+    }
+  });
+
+  renderExplorer();
+}
+
+function hasAnyRealBar(task) {
+  const t = EXPLORER_STATE.data?.[task];
+  if (!t) return false;
+  for (const age of Object.values(t)) {
+    for (const sex of Object.values(age)) {
+      for (const eth of Object.values(sex)) {
+        for (const m of Object.values(eth.methods || {})) {
+          if (m.error != null) return true;
+        }
+      }
+    }
+  }
+  return false;
+}
+
+function setTabSelected(root, task) {
+  for (const t of root.querySelectorAll(".explorer__tab")) {
+    t.setAttribute("aria-selected", t.dataset.task === task ? "true" : "false");
+  }
+}
+
+function renderExplorer() {
+  const readout = document.querySelector('[data-component="explorer-readout"]');
+  const { data, task, age, sex, ethnicity } = EXPLORER_STATE;
+  if (!data) return;
+
+  const taskTree = data[task];
+  const cell = taskTree?.[age]?.[sex]?.[ethnicity];
+  const summary = readout.querySelector(".explorer__summary");
+  const bars    = readout.querySelector(".explorer__bars");
+  bars.innerHTML = "";
+  if (!cell) {
+    summary.textContent = "";
+    bars.innerHTML = `<p class="explorer__empty">No data for this subgroup.</p>`;
+    return;
+  }
+
+  if (cell.n_real === 0 && cell.auroc_groundtruth == null) {
+    summary.textContent = `${prettyTask(task)} · ${prettyTriple(age, sex, ethnicity)}`;
+    bars.innerHTML = `<p class="explorer__empty">No real samples in this subgroup.</p>`;
+    return;
+  }
+
+  const allSingleClass = Object.values(cell.methods || {})
+    .every(m => m.status === "single_class");
+  if (allSingleClass) {
+    summary.innerHTML = `${prettyTask(task)} · ${prettyTriple(age, sex, ethnicity)} · <em>AUROC undefined — only one outcome class in this subgroup (n = ${cell.n_real}).</em>`;
+    bars.innerHTML = "";
+    return;
+  }
+
+  summary.innerHTML =
+    `${prettyTask(task)} · <strong>${prettyTriple(age, sex, ethnicity)}</strong> · ` +
+    `n_real = ${cell.n_real ?? "?"} · ground-truth AUROC = ${cell.auroc_groundtruth?.toFixed(3) ?? "?"} ` +
+    (cell.auroc_groundtruth_ci
+      ? `[${cell.auroc_groundtruth_ci[0].toFixed(3)}–${cell.auroc_groundtruth_ci[1].toFixed(3)}]`
+      : "");
+
+  // Compute max for scaling across the bars in THIS cell
+  const validErrors = EXPLORER_METHOD_ORDER
+    .map(m => cell.methods[m]?.error)
+    .filter(e => e != null);
+  const bestError = validErrors.length ? Math.min(...validErrors) : null;
+  const maxError  = validErrors.length ? Math.max(...validErrors) : 1;
+
+  for (const method of EXPLORER_METHOD_ORDER) {
+    const mdata = cell.methods?.[method];
+    const bar = document.createElement("div");
+    bar.className = "explorer__bar";
+    bar.dataset.method = method;
+
+    if (!mdata || mdata.status === "not_exported") {
+      bar.classList.add("explorer__bar--missing");
+      bar.innerHTML = `
+        <div class="explorer__bar__label">${FIG7_LABELS[method] || humanize(method)}</div>
+        <div class="explorer__bar__track"></div>`;
+      bars.appendChild(bar);
+      continue;
+    }
+    if (mdata.status === "single_class") {
+      bar.classList.add("explorer__bar--missing");
+      bar.innerHTML = `
+        <div class="explorer__bar__label">${FIG7_LABELS[method] || humanize(method)} · single-class</div>
+        <div class="explorer__bar__track"></div>`;
+      bars.appendChild(bar);
+      continue;
+    }
+
+    const pct = Math.min(100, (mdata.error / maxError) * 100);
+    const title = mdata.ci
+      ? `error ${mdata.error.toFixed(3)} · 95% CI [${mdata.ci[0].toFixed(3)}–${mdata.ci[1].toFixed(3)}]`
+      : `error ${mdata.error.toFixed(3)}`;
+    if (mdata.error === bestError) bar.classList.add("is-best");
+    bar.innerHTML = `
+      <div class="explorer__bar__label">${FIG7_LABELS[method] || humanize(method)}</div>
+      <div class="explorer__bar__track" title="${title}">
+        <div class="explorer__bar__fill" style="width:${pct}%">${mdata.error.toFixed(3)}</div>
+      </div>`;
+    bars.appendChild(bar);
+  }
+}
+
+function prettyTask(task) {
+  return FIG7_TASK_TITLES[task] || task;
+}
+
+function prettyTriple(age, sex, ethnicity) {
+  const ageLabel = { "age_<30": "< 30", "age_31-50": "31–50", "age_51-70": "51–70", "age_>70": "> 70" }[age] || age;
+  const sexLabel = humanize(sex);
+  const ethLabel = humanize(ethnicity);
+  return `${sexLabel}, age ${ageLabel}, ${ethLabel}`;
+}
+
+function humanize(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+
+document.addEventListener("DOMContentLoaded", initExplorer);
+
 document.addEventListener("DOMContentLoaded", renderFigure6);
