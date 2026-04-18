@@ -141,9 +141,8 @@ document.addEventListener("DOMContentLoaded", enhanceTables);
 /* Figure 6 --------------------------------------------------------------- */
 const FIG6_TASKS = Object.keys(FIG7_TASK_TITLES);
 const FIG6_PANELS = { delta_tstr: "ΔTSTR (train on synthetic)", delta_trts: "ΔTRTS (eval on synthetic)" };
-const FIG6_MAX = 0.05;   // per paper figure caption
-// Method order for Figure 6 bars
-const METHOD_ORDER = ["healthgen", "timeautodiff", "timediff", "enhanced_timeautodiff"];
+// HealthGen excluded — its values (~0.13–0.19) dwarf the others and don't fit the comparison scale.
+const METHOD_ORDER = ["timeautodiff", "timediff", "enhanced_timeautodiff"];
 
 async function renderFigure6() {
   const mount = document.querySelector('[data-component="figure6"]');
@@ -152,7 +151,23 @@ async function renderFigure6() {
   const f6 = res.figure6;
   if (!f6) return;
 
+  // Compute a fitted y-axis cap per panel (max across all rendered bars + 20% headroom).
+  const panelMax = {};
+  for (const panelKey of Object.keys(FIG6_PANELS)) {
+    let m = 0;
+    for (const task of FIG6_TASKS) {
+      for (const method of METHOD_ORDER) {
+        const entry = f6[panelKey]?.[task]?.[method];
+        if (!entry) continue;
+        const v = entry.mean + (entry.std ?? 0);
+        if (v > m) m = v;
+      }
+    }
+    panelMax[panelKey] = m * 1.2 || 0.05;
+  }
+
   for (const [panelKey, panelTitle] of Object.entries(FIG6_PANELS)) {
+    const axisMax = panelMax[panelKey];
     const panel = document.createElement("div");
     panel.className = "fig6-panel";
     panel.innerHTML = `<h3>${panelTitle}</h3>`;
@@ -168,16 +183,15 @@ async function renderFigure6() {
         const entry = taskData[method];
         if (!entry) continue;
         const v = entry.mean, err = entry.std;
-        const truncated = v > FIG6_MAX;
-        const pct = Math.min(100, (v / FIG6_MAX) * 100);
+        const pct = Math.min(100, (v / axisMax) * 100);
         const isBest = v === best;
         let ciHTML = "";
         let valuePos = pct;
         if (err != null) {
           const lo = Math.max(0, v - err);
-          const hi = Math.min(FIG6_MAX, v + err);
-          const loPct = (lo / FIG6_MAX) * 100;
-          const hiPct = (hi / FIG6_MAX) * 100;
+          const hi = Math.min(axisMax, v + err);
+          const loPct = (lo / axisMax) * 100;
+          const hiPct = (hi / axisMax) * 100;
           ciHTML = `<div class="fig6-row__ci" style="left:${loPct}%; right:${100 - hiPct}%;" title="±${err.toFixed(3)}"></div>`;
           valuePos = Math.min(88, hiPct + 1);
         }
@@ -188,8 +202,8 @@ async function renderFigure6() {
         el.innerHTML = `
           <div class="fig6-row__label">${FIG7_LABELS[method] || humanize(method)}</div>
           <div class="fig6-row__track" style="--bar-pct:${pct}; --value-pos:${valuePos}"
-               title="value ${v.toFixed(3)}${err != null ? ' ± ' + err.toFixed(3) : ''}${truncated ? ' (truncated at 0.05)' : ''}">
-            <div class="fig6-row__fill ${truncated ? 'fig6-row__fill--truncated' : ''}"
+               title="value ${v.toFixed(3)}${err != null ? ' ± ' + err.toFixed(3) : ''}">
+            <div class="fig6-row__fill"
                  style="background: var(--color-${method.replaceAll('_', '-')}); width:${pct}%">${starHTML}</div>
             ${ciHTML}
             <span class="fig6-row__value">${v.toFixed(3)}</span>
@@ -212,7 +226,7 @@ const EXPLORER_STATE = {
 };
 
 const EXPLORER_METHOD_ORDER = [
-  "test", "timeautodiff", "timediff", "enhanced_timeautodiff", "healthgen"
+  "test", "timeautodiff", "timediff", "enhanced_timeautodiff"
 ];
 
 async function initExplorer() {
