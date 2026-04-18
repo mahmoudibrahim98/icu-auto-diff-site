@@ -35,6 +35,22 @@
       "timediff": 0.088
     }
   },
+  "figure7_cis": {
+    "eicu_mortality24": {
+      "test": [
+        0.0344,
+        0.0867
+      ],
+      "timeautodiff": [
+        0.0332,
+        0.0803
+      ],
+      "timediff": [
+        0.0319,
+        0.0843
+      ]
+    }
+  },
   "meta": {
     "extractor": "scripts/extract_paper_numbers.py",
     "source_pdf": "scripts/tests/fixtures/camera-ready.pdf"
