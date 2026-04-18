@@ -159,9 +159,24 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--out", required=True, type=Path)
     args = ap.parse_args(argv)
 
-    results = extract_results(args.pdf)
+    new_data = extract_results(args.pdf)
+
+    # Merge with existing JSON — preserve keys added by other scripts
+    # (figure6, figure7_cis, figure7_points) rather than overwriting.
     args.out.parent.mkdir(parents=True, exist_ok=True)
-    args.out.write_text(json.dumps(results, indent=2, sort_keys=True) + "\n")
+    existing: dict[str, Any] = {}
+    if args.out.exists():
+        try:
+            existing = json.loads(args.out.read_text())
+        except (json.JSONDecodeError, OSError):
+            pass  # start fresh if file is corrupt
+
+    # Keys we own (always overwrite with fresh PDF extraction)
+    OWN_KEYS = {"figure7", "table1", "table2", "figure6_health_gen_ranges", "meta"}
+    for k in OWN_KEYS:
+        existing[k] = new_data[k]
+
+    args.out.write_text(json.dumps(existing, indent=2, sort_keys=True) + "\n")
     print(f"wrote {args.out}")
     return 0
 

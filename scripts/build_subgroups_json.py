@@ -1,4 +1,4 @@
-"""Aggregate per-subgroup AUROC CSV → data/subgroups.json.
+"""Aggregate per-subgroup AUROC CSVs → data/subgroups.json.
 
 Subgroup encoding (confirmed via data exploration):
     subgroup = "{sex}_{ethnicity}_{age}"
@@ -6,26 +6,29 @@ Subgroup encoding (confirmed via data exploration):
     ethnicity∈ {0=white, 1=black, 2=asian, 3=other}
     age      ∈ {0=<30, 1=31-50, 2=51-70, 3=>70}
 
-Method encoding (confirmed from TimeDiff/notebooks/3a_*_mortality.ipynb):
-    evaluated_on                     → bar label
-    "oracle"                         → ground-truth pool (reference)
-    "test"                           → small-real subset (ε_naive)
-    "synthetic_timeautodiff"         → TimeAutoDiff (ε_synth)
-    "synthetic_timediff"             → TimeDiff
-    "synthetic_enhanced_timeautodiff"→ Enhanced TimeAutoDiff  (if exported)
-    "synthetic_healthgen"            → HealthGen (if exported)
+Method encoding — source `evaluated_on` → internal site name:
+
+    Source evaluated_on                 Internal          Source dir
+    ─────────────────────────────────── ──────────────── ──────────
+    oracle                              oracle (ref)      A or B
+    test                                test              A or B
+    synthetic_timeautodiff_baseline     timeautodiff      A
+    synthetic_timeautodiff_enhanced     enhanced_ta       A
+    synthetic_timeautodiff              timeautodiff      B (fallback)
+    synthetic_timediff                  timediff          B
+    random_all_subgroups                (ignored)         B
 
 Strategy:
 1. For each subgroup triple, compute oracle AUROC mean (ground truth).
 2. For each method row, compute absolute |oracle_mean - method_mean|
-   across the 5 synth_data_index repetitions → "error".
+   across the repetitions → "error".
 3. Bootstrap a 95% CI on the method-AUROC distribution → transform to
    error CI via |oracle_mean - method_ci_lo|, |oracle_mean - method_ci_hi|.
 4. Cells with no rows for a method emit {"status": "not_exported"}.
 5. Cells with oracle rows but where all AUROC are NaN emit a
    degenerate-class marker {"status": "single_class"}.
 
-Fails loud if any `model` integer ID is seen that isn't in METHOD_MAP.
+Fails loud on unknown `evaluated_on` strings.
 """
 from __future__ import annotations
 
@@ -38,23 +41,16 @@ import numpy as np
 import pandas as pd
 
 
-# Method ID → internal name.  Update if the source notebook changes.
-# Verified against TimeDiff/notebooks/3a_[COMPLETE]intersectional_evaluation_eicu_mortality.ipynb.
-METHOD_MAP: Dict[int, str] = {
-    0: "real_model",           # trained on real, used for oracle/test evals
-    1: "timeautodiff",
-    2: "timediff",
-    3: "enhanced_timeautodiff",
-    4: "healthgen",
-}
-
+# Canonical mapping: evaluated_on → internal method name (or sentinel).
+# Anything NOT in this dict causes a KeyError (fail loud).
 EVALUATED_ON_TO_METHOD: Dict[str, str] = {
-    "oracle": "oracle",
-    "test": "test",
-    "synthetic_timeautodiff": "timeautodiff",
-    "synthetic_timediff": "timediff",
-    "synthetic_enhanced_timeautodiff": "enhanced_timeautodiff",
-    "synthetic_healthgen": "healthgen",
+    "oracle":                         "oracle",
+    "test":                           "test",
+    "synthetic_timeautodiff_baseline": "timeautodiff",     # Dir A preferred
+    "synthetic_timeautodiff_enhanced": "enhanced_timeautodiff",  # Dir A only
+    "synthetic_timeautodiff":          "timeautodiff",     # Dir B fallback
+    "synthetic_timediff":              "timediff",         # Dir B only
+    "random_all_subgroups":            "__ignore__",       # Dir B noise row
 }
 
 SEX: Dict[int, str] = {0: "male", 1: "female"}
@@ -69,6 +65,14 @@ EMPTY_CELL_TEMPLATE = {
     "auroc_groundtruth": None,
     "auroc_groundtruth_ci": None,
     "methods": {m: {"status": "not_exported"} for m in ALL_METHODS},
+}
+
+# CSV filename stem → (data_task key used in output JSON, csv filename suffix in dirs)
+TASK_MAP: Dict[str, str] = {
+    "eicu_mortality24":  "eicu_mortality24",
+    "eicu_los24":        "eicu_los_24",
+    "mimic_mortality24": "mimic_mortality24",
+    "mimic_los24":       "mimic_los_24",
 }
 
 
@@ -109,25 +113,53 @@ def _make_empty_tree(data_task: str) -> Dict[str, Any]:
     return tree
 
 
-def build_subgroups(csv_path: Optional[Path], data_task: str) -> Dict[str, Any]:
-    tree = _make_empty_tree(data_task)
-
-    if csv_path is None:
-        return tree  # All cells stay "not_exported".
-
+def _load_and_validate(csv_path: Path) -> pd.DataFrame:
+    """Load CSV and fail loud on unknown evaluated_on values."""
     df = pd.read_csv(csv_path)
-
-    # Fail loud on unknown model IDs.
-    unknown = set(df["model"].unique()) - set(METHOD_MAP.keys())
+    unknown = set(df["evaluated_on"].unique()) - set(EVALUATED_ON_TO_METHOD.keys())
     if unknown:
         raise KeyError(
-            f"Unknown model IDs in {csv_path}: {sorted(unknown)}. "
-            f"Expected {sorted(METHOD_MAP.keys())}."
+            f"Unknown evaluated_on values in {csv_path}: {sorted(unknown)}. "
+            f"Expected one of: {sorted(EVALUATED_ON_TO_METHOD.keys())}."
         )
+    return df
+
+
+def build_subgroups(
+    csv_path: Optional[Path],
+    data_task: str,
+    csv_path_b: Optional[Path] = None,
+) -> Dict[str, Any]:
+    """Build the subgroup tree for one data×task combo.
+
+    csv_path   — Dir A CSV (has synthetic_timeautodiff_baseline/enhanced)
+    csv_path_b — Dir B CSV (has synthetic_timediff, synthetic_timeautodiff fallback)
+    """
+    tree = _make_empty_tree(data_task)
+
+    frames = []
+    # Track which source a row came from so we can prefer Dir A for timeautodiff
+    if csv_path is not None and csv_path.exists():
+        df_a = _load_and_validate(csv_path)
+        df_a = df_a[df_a["evaluated_on"] != "__ignore__"].copy()
+        df_a["_src"] = "A"
+        frames.append(df_a)
+    if csv_path_b is not None and csv_path_b.exists():
+        df_b = _load_and_validate(csv_path_b)
+        df_b = df_b[df_b["evaluated_on"] != "__ignore__"].copy()
+        # Drop random_all_subgroups rows
+        df_b = df_b[df_b["evaluated_on"] != "random_all_subgroups"].copy()
+        df_b["_src"] = "B"
+        frames.append(df_b)
+
+    if not frames:
+        return tree  # All cells stay "not_exported".
+
+    df = pd.concat(frames, ignore_index=True)
 
     # Group by subgroup triple.
     for sg, sub in df.groupby("subgroup"):
-        sex, eth, age = decode_subgroup(sg)
+        sex, eth, age = decode_subgroup(str(sg))
         cell = tree[data_task][age][sex][eth]
 
         oracle = sub[sub["evaluated_on"] == "oracle"]["auroc"].dropna().to_numpy()
@@ -142,10 +174,41 @@ def build_subgroups(csv_path: Optional[Path], data_task: str) -> Dict[str, Any]:
         cell["n_real"] = int(sub[sub["evaluated_on"] == "test"]
                                 ["auroc"].dropna().size)
 
-        for eval_label, method in EVALUATED_ON_TO_METHOD.items():
-            if method == "oracle":
+        # Collect per-method rows with precedence rules:
+        # - timeautodiff: prefer synthetic_timeautodiff_baseline (Dir A);
+        #                 if absent, fall back to synthetic_timeautodiff (Dir B).
+        # - enhanced_timeautodiff: synthetic_timeautodiff_enhanced (Dir A only).
+        # - timediff: synthetic_timediff (Dir B only).
+        # - test: prefer Dir A.
+
+        method_rows: Dict[str, np.ndarray] = {}
+
+        # Collect by eval label, then apply precedence.
+        rows_by_label: Dict[str, np.ndarray] = {}
+        for lbl in sub["evaluated_on"].unique():
+            if lbl == "oracle":
                 continue
-            rows = sub[sub["evaluated_on"] == eval_label]["auroc"].dropna().to_numpy()
+            internal = EVALUATED_ON_TO_METHOD.get(lbl)
+            if internal is None or internal == "__ignore__":
+                continue
+            rows_by_label[lbl] = sub[sub["evaluated_on"] == lbl]["auroc"].dropna().to_numpy()
+
+        # timeautodiff: prefer baseline (Dir A), else fallback (Dir B)
+        if "synthetic_timeautodiff_baseline" in rows_by_label:
+            method_rows["timeautodiff"] = rows_by_label["synthetic_timeautodiff_baseline"]
+        elif "synthetic_timeautodiff" in rows_by_label:
+            method_rows["timeautodiff"] = rows_by_label["synthetic_timeautodiff"]
+
+        if "synthetic_timeautodiff_enhanced" in rows_by_label:
+            method_rows["enhanced_timeautodiff"] = rows_by_label["synthetic_timeautodiff_enhanced"]
+
+        if "synthetic_timediff" in rows_by_label:
+            method_rows["timediff"] = rows_by_label["synthetic_timediff"]
+
+        if "test" in rows_by_label:
+            method_rows["test"] = rows_by_label["test"]
+
+        for method, rows in method_rows.items():
             if rows.size == 0:
                 continue
             error = abs(oracle_mean - float(rows.mean()))
@@ -158,36 +221,61 @@ def build_subgroups(csv_path: Optional[Path], data_task: str) -> Dict[str, Any]:
     return tree
 
 
-def build_full(csv_dir: Optional[Path]) -> Dict[str, Any]:
-    """Build all four Data×Task combos into one tree.
-
-    Only `eicu_mortality24` has a CSV shipped today; the other three
-    Data×Task combos render as all-not_exported stubs until the
-    aggregate_missing_tasks pipeline runs.
-    """
-    csv_map: Dict[str, Optional[Path]] = {
-        "eicu_mortality24": (csv_dir / "all_results_timediff_and_timeautodiff_"
-                             "eicu_with_cond_mortality.csv") if csv_dir else None,
-        "eicu_los24": None,
-        "mimic_mortality24": None,
-        "mimic_los24": None,
-    }
+def build_full(
+    csv_dir_autodiff: Optional[Path],
+    csv_dir_timediff: Optional[Path],
+) -> Dict[str, Any]:
+    """Build all four Data×Task combos into one tree."""
     merged: Dict[str, Any] = {}
-    for task, path in csv_map.items():
-        tree = build_subgroups(csv_path=path if path and path.exists() else None,
-                               data_task=task)
+    for task_key, csv_suffix in TASK_MAP.items():
+        path_a = (csv_dir_autodiff / f"all_results_{csv_suffix}.csv"
+                  ) if csv_dir_autodiff else None
+        path_b = (csv_dir_timediff / f"all_results_{csv_suffix}.csv"
+                  ) if csv_dir_timediff else None
+        tree = build_subgroups(
+            csv_path=path_a if path_a and path_a.exists() else None,
+            data_task=task_key,
+            csv_path_b=path_b if path_b and path_b.exists() else None,
+        )
         merged.update(tree)
     return merged
 
 
 def main(argv: Optional[List[str]] = None) -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--csv-dir", required=False, type=Path,
-                    default=Path("../4_timediff/TimeDiff/intersectional_analysis_results"))
+    # New canonical args
+    ap.add_argument(
+        "--csv-dir-autodiff", required=False, type=Path,
+        default=Path(__file__).resolve().parent.parent.parent /
+                "4_timediff/icu-autodiff/0_ecml_conditional_autodiff_generation"
+                "/scripts_evaluating_intersectional/results",
+        help="Dir A: Enhanced TimeAutoDiff experiments",
+    )
+    ap.add_argument(
+        "--csv-dir-timediff", required=False, type=Path,
+        default=Path(__file__).resolve().parent.parent.parent /
+                "4_timediff/icu-autodiff/0c_ecml_conditional_timediff_generation"
+                "/scripts_evaluating_intersectional/results",
+        help="Dir B: TimeDiff comparison experiments",
+    )
+    # Back-compat alias
+    ap.add_argument(
+        "--csv-dir", required=False, type=Path,
+        dest="csv_dir_autodiff_alias",
+        help="Alias for --csv-dir-autodiff (back-compat).",
+    )
     ap.add_argument("--out", required=True, type=Path)
     args = ap.parse_args(argv)
 
-    out = build_full(args.csv_dir if args.csv_dir.exists() else None)
+    # Back-compat: if old --csv-dir was passed, let it override autodiff dir
+    autodiff_dir = args.csv_dir_autodiff
+    if args.csv_dir_autodiff_alias is not None:
+        autodiff_dir = args.csv_dir_autodiff_alias
+
+    out = build_full(
+        csv_dir_autodiff=autodiff_dir if autodiff_dir and autodiff_dir.exists() else None,
+        csv_dir_timediff=args.csv_dir_timediff if args.csv_dir_timediff and args.csv_dir_timediff.exists() else None,
+    )
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(json.dumps(out, indent=2, sort_keys=True) + "\n")
     print(f"wrote {args.out}")
