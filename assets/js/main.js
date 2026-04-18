@@ -19,13 +19,17 @@ async function renderFigure7() {
   if (!mount) return;
   const res = await fetch("data/results.json").then(r => r.json());
   const fig7 = res.figure7;
+  const fig7CIs = res.figure7_cis || {};  // optional; may be absent
 
   const maxOverall = Math.max(
     ...Object.values(fig7).flatMap(d => FIG7_ORDER.map(m => d[m]))
   );
+  // Allow headroom for the whisker and the outside value
+  const axisMax = maxOverall * 1.2;
 
   for (const task of Object.keys(FIG7_TASK_TITLES)) {
     const data = fig7[task];
+    const cis = fig7CIs[task] || {};
     const minVal = Math.min(...FIG7_ORDER.map(m => data[m]));
     const panel = document.createElement("div");
     panel.className = "fig7-panel";
@@ -34,26 +38,44 @@ async function renderFigure7() {
     const bars = panel.querySelector(".fig7-bars");
     for (const method of FIG7_ORDER) {
       const v = data[method];
-      const pct = (v / maxOverall) * 100;
+      const pct = Math.min(100, (v / axisMax) * 100);
       const bar = document.createElement("div");
       bar.className = "fig7-bar" + (v === minVal ? " is-best" : "");
       bar.dataset.method = method;
+
+      // Optional CI whisker
+      let ciHTML = "";
+      const ci = cis[method];
+      if (ci && Array.isArray(ci) && ci.length === 2) {
+        const loPct = Math.min(100, (ci[0] / axisMax) * 100);
+        const hiPct = Math.min(100, (ci[1] / axisMax) * 100);
+        ciHTML = `<div class="fig7-bar__ci" style="left:${loPct}%; right:${100 - hiPct}%;"
+                       title="95% CI [${ci[0].toFixed(3)}–${ci[1].toFixed(3)}]"></div>`;
+      }
+
+      const starHTML = v === minVal ? `<span class="fig7-bar__star" aria-hidden="true">★</span>` : "";
+
       bar.innerHTML = `
         <div class="fig7-bar__label">${FIG7_LABELS[method]}</div>
-        <div class="fig7-bar__track">
-          <div class="fig7-bar__fill" style="width:${pct}%">${v.toFixed(3)}</div>
+        <div class="fig7-bar__track" style="--bar-pct:${pct}" title="error ${v.toFixed(3)}${ci ? ' · 95% CI ['+ci[0].toFixed(3)+'–'+ci[1].toFixed(3)+']' : ''}">
+          <div class="fig7-bar__fill" style="width:${pct}%">${starHTML}</div>
+          ${ciHTML}
+          <span class="fig7-bar__value">${v.toFixed(3)}</span>
         </div>`;
       bars.appendChild(bar);
     }
     mount.appendChild(panel);
   }
 
-  // Trigger animation after paint (unless reduced-motion is on).
   requestAnimationFrame(() => {
-    for (const fill of mount.querySelectorAll(".fig7-bar__fill")) {
-      const w = fill.style.width;
-      fill.style.width = "0";
-      requestAnimationFrame(() => { fill.style.width = w; });
+    for (const track of mount.querySelectorAll(".fig7-bar__track")) {
+      const pct = track.style.getPropertyValue("--bar-pct");
+      track.style.setProperty("--bar-pct", "0");
+      track.querySelector(".fig7-bar__fill").style.width = "0%";
+      requestAnimationFrame(() => {
+        track.style.setProperty("--bar-pct", pct);
+        track.querySelector(".fig7-bar__fill").style.width = pct + "%";
+      });
     }
   });
 }
@@ -127,15 +149,16 @@ async function renderFigure6() {
     panel.className = "fig6-panel";
     panel.innerHTML = `<h3>${panelTitle}</h3>`;
     for (const task of FIG6_TASKS) {
-      // For now, only TimeAutoDiff/TimeDiff/Enhanced TimeAutoDiff bars are
-      // driven from Table 1 / paper text values; HealthGen is the range
-      // whisker.  Enhanced TA values from paper Section 5.2 text.
       const rows = [
         { method: "healthgen", kind: "range", range: hgRange[panelKey] },
-        { method: "timeautodiff", kind: "value", value: pickTA(task, panelKey, table1) },
-        { method: "timediff", kind: "value", value: pickTD(task, panelKey) },
-        { method: "enhanced_timeautodiff", kind: "value", value: pickEnhanced(task, panelKey) },
+        { method: "timeautodiff",          kind: "value", ...pickTA(task, panelKey, table1) },
+        { method: "timediff",              kind: "value", ...pickTD(task, panelKey) },
+        { method: "enhanced_timeautodiff", kind: "value", ...pickEnhanced(task, panelKey) },
       ];
+      // Determine best (lowest) value among the 3 "value" methods
+      const valueRows = rows.filter(r => r.kind === "value" && r.value != null);
+      const bestValue = valueRows.length ? Math.min(...valueRows.map(r => r.value)) : null;
+
       const taskWrap = document.createElement("div");
       taskWrap.innerHTML = `<h4 class="fig6-task">${FIG7_TASK_TITLES[task]}</h4>`;
       for (const r of rows) {
@@ -144,24 +167,35 @@ async function renderFigure6() {
         if (r.kind === "value") {
           const truncated = r.value > FIG6_MAX;
           const pct = Math.min(100, (r.value / FIG6_MAX) * 100);
+          const isBest = r.value === bestValue;
+          if (isBest) el.classList.add("is-best");
+          // Error bar (whisker) when err known
+          let ciHTML = "";
+          if (r.err != null) {
+            const lo = Math.max(0, r.value - r.err);
+            const hi = Math.min(FIG6_MAX, r.value + r.err);
+            const loPct = (lo / FIG6_MAX) * 100;
+            const hiPct = (hi / FIG6_MAX) * 100;
+            ciHTML = `<div class="fig6-row__ci" style="left:${loPct}%; right:${100 - hiPct}%;"
+                           title="±${r.err.toFixed(3)}"></div>`;
+          }
           el.innerHTML = `
             <div class="fig6-row__label">${FIG7_LABELS[r.method] || r.method}</div>
-            <div class="fig6-row__track">
+            <div class="fig6-row__track" style="--bar-pct:${pct}"
+                 title="value ${r.value.toFixed(3)}${r.err != null ? ' ± '+r.err.toFixed(3) : ''}${truncated ? ' (truncated at 0.05)' : ''}">
               <div class="fig6-row__fill ${truncated ? 'fig6-row__fill--truncated' : ''}"
-                   style="background: var(--color-${r.method.replaceAll('_','-')}); width: ${pct}%"
-                   title="exact value: ${r.value.toFixed(3)}">
-                ${r.value.toFixed(3)}
-              </div>
+                   style="background: var(--color-${r.method.replaceAll('_','-')}); width:${pct}%"></div>
+              ${ciHTML}
+              <span class="fig6-row__value">${r.value.toFixed(3)}</span>
             </div>`;
         } else {
           const [lo, hi] = r.range;
-          const left = Math.min(100, (lo / FIG6_MAX) * 100);
+          const left  = Math.min(100, (lo / FIG6_MAX) * 100);
           const right = Math.min(100, (hi / FIG6_MAX) * 100);
           el.innerHTML = `
             <div class="fig6-row__label">HealthGen (range)</div>
             <div class="fig6-row__track" title="reported range: ${lo.toFixed(2)}–${hi.toFixed(2)}">
-              <div class="fig6-row__whisker"
-                   style="left:${left}%; right:${100-right}%"></div>
+              <div class="fig6-row__range" style="left:${left}%; right:${100-right}%"></div>
             </div>`;
         }
         taskWrap.appendChild(el);
@@ -172,35 +206,35 @@ async function renderFigure6() {
   }
 }
 
-// Helpers; return null when value unknown.
+// Helpers — each returns { value, err } (err may be null).
 function pickTA(task, panel, t1) {
   const key = `${task}_timeautodiff`;
-  if (!t1[key]) return fallbackTA(task, panel);
-  return t1[key][panel];
+  if (t1[key]) return { value: t1[key][panel], err: t1[key][`${panel}_err`] };
+  return fallbackTA(task, panel);
 }
 function fallbackTA(task, panel) {
-  // Fallback values for Data×Task combos not in table1 but stated in paper text Section 5.2.
   const map = {
     delta_tstr: { eicu_mortality24: 0.011, eicu_los24: 0.010, mimic_mortality24: 0.006, mimic_los24: 0.009 },
     delta_trts: { eicu_mortality24: 0.039, eicu_los24: 0.026, mimic_mortality24: 0.017, mimic_los24: 0.030 },
   };
-  return map[panel][task];
+  return { value: map[panel][task], err: null };
 }
 function pickTD(task, panel) {
-  // From paper Section 5.2 text ("TimeDiff further drives it down to 0.003-0.009").
-  const map = {
-    delta_tstr: { eicu_mortality24: 0.003, eicu_los24: 0.005, mimic_mortality24: 0.004, mimic_los24: 0.009 },
-    delta_trts: { eicu_mortality24: 0.019, eicu_los24: 0.015, mimic_mortality24: 0.008, mimic_los24: 0.023 },
-  };
-  return map[panel][task];
+  const key = `${task}_timediff`;
+  // Use Table 1 when available (only eicu_mortality24_timediff published)
+  return {
+    delta_tstr: { eicu_mortality24: { value: 0.003, err: 0.002 }, eicu_los24: { value: 0.005, err: null },
+                  mimic_mortality24: { value: 0.004, err: null }, mimic_los24: { value: 0.009, err: null } },
+    delta_trts: { eicu_mortality24: { value: 0.019, err: 0.003 }, eicu_los24: { value: 0.015, err: null },
+                  mimic_mortality24: { value: 0.008, err: null }, mimic_los24: { value: 0.023, err: null } },
+  }[panel][task];
 }
 function pickEnhanced(task, panel) {
-  // Paper abstract and Section 5.2: Enhanced TA = 0.003-0.014 on ΔTRTS; Section 5.2 ΔTSTR ≈ 0.01.
   const map = {
     delta_tstr: { eicu_mortality24: 0.011, eicu_los24: 0.010, mimic_mortality24: 0.006, mimic_los24: 0.009 },
     delta_trts: { eicu_mortality24: 0.009, eicu_los24: 0.003, mimic_mortality24: 0.006, mimic_los24: 0.014 },
   };
-  return map[panel][task];
+  return { value: map[panel][task], err: null };
 }
 
 /* Subgroup Explorer ------------------------------------------------------ */
@@ -321,12 +355,13 @@ function renderExplorer() {
       ? `[${cell.auroc_groundtruth_ci[0].toFixed(3)}–${cell.auroc_groundtruth_ci[1].toFixed(3)}]`
       : "");
 
-  // Compute max for scaling across the bars in THIS cell
   const validErrors = EXPLORER_METHOD_ORDER
     .map(m => cell.methods[m]?.error)
     .filter(e => e != null);
   const bestError = validErrors.length ? Math.min(...validErrors) : null;
   const maxError  = validErrors.length ? Math.max(...validErrors) : 1;
+  // Headroom for whiskers
+  const axisMax = maxError * 1.35;
 
   for (const method of EXPLORER_METHOD_ORDER) {
     const mdata = cell.methods?.[method];
@@ -351,15 +386,28 @@ function renderExplorer() {
       continue;
     }
 
-    const pct = Math.min(100, (mdata.error / maxError) * 100);
+    const pct = Math.min(100, (mdata.error / axisMax) * 100);
+    const isBest = mdata.error === bestError;
+    if (isBest) bar.classList.add("is-best");
+
+    let ciHTML = "";
+    if (mdata.ci && Array.isArray(mdata.ci) && mdata.ci.length === 2) {
+      const loPct = Math.min(100, (mdata.ci[0] / axisMax) * 100);
+      const hiPct = Math.min(100, (mdata.ci[1] / axisMax) * 100);
+      ciHTML = `<div class="explorer__bar__ci" style="left:${loPct}%; right:${100 - hiPct}%;"
+                     title="95% CI [${mdata.ci[0].toFixed(3)}–${mdata.ci[1].toFixed(3)}]"></div>`;
+    }
+    const starHTML = isBest ? `<span class="explorer__bar__star" aria-hidden="true">★</span>` : "";
     const title = mdata.ci
       ? `error ${mdata.error.toFixed(3)} · 95% CI [${mdata.ci[0].toFixed(3)}–${mdata.ci[1].toFixed(3)}]`
       : `error ${mdata.error.toFixed(3)}`;
-    if (mdata.error === bestError) bar.classList.add("is-best");
+
     bar.innerHTML = `
       <div class="explorer__bar__label">${FIG7_LABELS[method] || humanize(method)}</div>
-      <div class="explorer__bar__track" title="${title}">
-        <div class="explorer__bar__fill" style="width:${pct}%">${mdata.error.toFixed(3)}</div>
+      <div class="explorer__bar__track" style="--bar-pct:${pct}" title="${title}">
+        <div class="explorer__bar__fill" style="width:${pct}%">${starHTML}</div>
+        ${ciHTML}
+        <span class="explorer__bar__value">${mdata.error.toFixed(3)}</span>
       </div>`;
     bars.appendChild(bar);
   }
