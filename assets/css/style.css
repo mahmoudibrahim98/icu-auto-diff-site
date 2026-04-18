@@ -222,6 +222,45 @@ pre  { font-family: var(--font-mono); background: var(--color-code-bg); padding:
 .results-block__lede { color: var(--color-ink-soft); max-width: 760px; }
 .results-block__note { color: var(--color-ink-soft); font-size: 0.9375rem; margin-top: var(--space-2); }
 
+.results-intro {
+  font-size: 1.0625rem;
+  color: var(--color-ink);
+  margin: var(--space-4) 0 var(--space-6);
+  max-width: 760px;
+}
+
+/* Explainer callout — highlights the key concept (ground truth, ★) ------- */
+.explainer {
+  background: var(--color-accent-soft);
+  border-left: 4px solid var(--color-accent);
+  border-radius: var(--radius-4);
+  padding: var(--space-6);
+  margin: var(--space-4) 0 var(--space-8);
+  max-width: 760px;
+}
+.explainer__title {
+  margin: 0 0 var(--space-3);
+  font-size: 0.8125rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-accent);
+  font-weight: 700;
+}
+.explainer p { margin: 0 0 var(--space-3); color: var(--color-ink); }
+.explainer p:last-child { margin-bottom: 0; }
+.explainer__list {
+  margin: 0 0 var(--space-3);
+  padding-left: var(--space-6);
+  color: var(--color-ink);
+}
+.explainer__list li { margin: var(--space-1) 0; }
+.explainer__list strong { color: var(--color-accent); }
+.explainer__star { color: var(--color-accent); font-weight: 700; font-size: 1.125rem; }
+.explainer code {
+  background: rgba(255, 255, 255, 0.6);
+  font-size: 0.9em;
+}
+
 /* Figure 7 grid of small bar charts --------------------------------------- */
 .fig7-grid {
   display: grid;

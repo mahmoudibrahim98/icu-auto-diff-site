@@ -157,25 +157,67 @@
   </figure>
 </section>
     <section id="results" class="section">
-      <div id="figure7" class="results-block">
-  <h2>Subgroup-level evaluation error (Figure 7)</h2>
+      <h2>Results</h2>
+
+      <p class="results-intro">
+        We ask a simple question in two parts. <strong>(1) Globally</strong>: can a synthetic cohort stand in for a real one when we train or evaluate a predictive model? <strong>(2) By subgroup</strong>: does that still hold for a specific demographic intersection — say, Black women over 70 — where real data is scarce?
+      </p>
+
+      <aside class="explainer">
+        <h3 class="explainer__title">How we measure closeness</h3>
+        <p>
+          Wherever we talk about <em>error</em> in this section, we mean the
+          absolute AUROC distance between two evaluation runs of the
+          <strong>same downstream model</strong>:
+        </p>
+        <ul class="explainer__list">
+          <li><strong>Ground truth</strong> — AUROC when the model is evaluated on a <em>large real cohort</em>.</li>
+          <li><strong>Candidate estimator</strong> — AUROC when the same model is evaluated on either a small real test subset or a synthetic cohort.</li>
+        </ul>
+        <p>
+          <code>error = |AUROC<sub>candidate</sub> − AUROC<sub>ground&nbsp;truth</sub>|</code>. Smaller error means the candidate cohort is a trustworthy proxy for real data. The winning method in each chart is marked with <span class="explainer__star">★</span>.
+        </p>
+      </aside>
+
+      <div id="figure6" class="results-block">
+  <h2>1. Global utility (Figure 6)</h2>
   <p class="results-block__lede">
-    Mean absolute AUROC error between a downstream model's performance on
-    small real test subsets ("Test") or synthetic cohorts, and its performance
-    on a large ground-truth real pool. Lower is better. Averaged across all
-    32 age × sex × ethnicity subgroups.
+    Two global questions, side by side.
+    <strong>ΔTSTR</strong> (left): can you <em>train</em> on synthetic and still
+    match real-trained performance? <strong>ΔTRTS</strong> (right): can you
+    <em>evaluate</em> a real-trained model on synthetic data and still match
+    real-evaluated performance? Each bar is the gap between the synthetic-based
+    and real-based AUROC — smaller = more faithful stand-in. HealthGen is
+    excluded because its ΔTRTS (≈0.13–0.19) is an order of magnitude above the
+    diffusion methods and would dominate the scale.
+  </p>
+  <div class="fig6-grid" data-component="figure6"></div>
+</div>
+
+      <div id="figure7" class="results-block">
+  <h2>2. Subgroup-level evaluation error (Figure 7)</h2>
+  <p class="results-block__lede">
+    Now fix the evaluator. For each of 32 age × sex × ethnicity subgroups we
+    compare two estimates of the model's AUROC on that subgroup:
+    (a) a small real-test slice (what you'd have without synthetic data), or
+    (b) a conditionally-sampled synthetic cohort. Both are scored against the
+    <strong>ground truth</strong> — the AUROC on the large real subgroup pool.
+    The chart shows the <em>mean error</em> averaged across all 32 subgroups.
+    Lower = the estimator recovers the ground-truth AUROC more faithfully.
   </p>
   <div class="fig7-grid" data-component="figure7"></div>
   <p class="results-block__note">
-    Enhanced TimeAutoDiff (★) achieves the lowest error on every Data × Task.
+    Enhanced TimeAutoDiff (★) achieves the lowest mean error on every Data × Task.
   </p>
 </div>
+
       <div id="table2" class="results-block">
-  <h2>How often does synthetic beat real-test? (Table 2)</h2>
+  <h2>3. How often does synthetic beat the small real-test? (Table 2)</h2>
   <p class="results-block__lede">
-    Percentage of the 32 intersectional subgroups in which the synthetic
-    cohort's evaluation error is strictly smaller than the small real-test
-    subset's error. Higher is better.
+    Counted across the 32 subgroups: the percentage in which the synthetic
+    estimate is strictly <em>closer to the ground truth</em> than the small
+    real-test slice is. Higher = the synthetic cohort is the better evaluator
+    in more subgroups. Ties are ignored.
   </p>
 
   <table data-enhance="true" class="tbl">
@@ -216,23 +258,14 @@
     </tbody>
   </table>
 </div>
-      <div id="figure6" class="results-block">
-  <h2>Global evaluation utility (Figure 6)</h2>
-  <p class="results-block__lede">
-    ΔTSTR = drop in downstream performance when a model is <em>trained</em> on
-    synthetic data. ΔTRTS = drop when a model trained on real data is
-    <em>evaluated</em> on synthetic data. Lower is better. HealthGen is
-    excluded from this comparison — its ΔTRTS (≈0.13–0.19) is an order of
-    magnitude above the diffusion methods and would dominate the scale.
-  </p>
-  <div class="fig6-grid" data-component="figure6"></div>
-</div>
       <div id="subgroup-explorer" class="results-block explorer" data-component="explorer">
-  <h2>Subgroup Explorer</h2>
+  <h2>4. Subgroup Explorer</h2>
   <p class="results-block__lede">
-    Pick any demographic intersection and see how accurately each generator's
-    synthetic cohort reproduces the model's performance on that subgroup's
-    large real pool. Smaller bars = smaller error = more trustworthy evaluation.
+    Pick any intersectional cell — age × sex × ethnicity — and see how close
+    each method's estimate is to the ground-truth AUROC on that subgroup's
+    large real pool. The bar below the picker shows each method's
+    <code>|AUROC<sub>candidate</sub>&nbsp;−&nbsp;AUROC<sub>ground&nbsp;truth</sub>|</code>.
+    Smaller = more trustworthy.
   </p>
 
   <nav class="explorer__tabs" role="tablist" aria-label="Data × Task">
