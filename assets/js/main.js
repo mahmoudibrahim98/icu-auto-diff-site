@@ -6,6 +6,7 @@ const FIG7_LABELS = {
   timeautodiff: "TimeAutoDiff",
   timediff: "TimeDiff",
   enhanced_timeautodiff: "Enhanced TimeAutoDiff",
+  healthgen: "HealthGen",
 };
 const FIG7_TASK_TITLES = {
   eicu_mortality24: "eICU · Mortality (24h)",
@@ -136,105 +137,60 @@ document.addEventListener("DOMContentLoaded", enhanceTables);
 const FIG6_TASKS = Object.keys(FIG7_TASK_TITLES);
 const FIG6_PANELS = { delta_tstr: "ΔTSTR (train on synthetic)", delta_trts: "ΔTRTS (eval on synthetic)" };
 const FIG6_MAX = 0.05;   // per paper figure caption
+// Method order for Figure 6 bars
+const METHOD_ORDER = ["healthgen", "timeautodiff", "timediff", "enhanced_timeautodiff"];
 
 async function renderFigure6() {
   const mount = document.querySelector('[data-component="figure6"]');
   if (!mount) return;
   const res = await fetch("data/results.json").then(r => r.json());
-  const hgRange = res.figure6_health_gen_ranges;
-  const table1 = res.table1;
+  const f6 = res.figure6;
+  if (!f6) return;
 
   for (const [panelKey, panelTitle] of Object.entries(FIG6_PANELS)) {
     const panel = document.createElement("div");
     panel.className = "fig6-panel";
     panel.innerHTML = `<h3>${panelTitle}</h3>`;
     for (const task of FIG6_TASKS) {
-      const rows = [
-        { method: "healthgen", kind: "range", range: hgRange[panelKey] },
-        { method: "timeautodiff",          kind: "value", ...pickTA(task, panelKey, table1) },
-        { method: "timediff",              kind: "value", ...pickTD(task, panelKey) },
-        { method: "enhanced_timeautodiff", kind: "value", ...pickEnhanced(task, panelKey) },
-      ];
-      // Determine best (lowest) value among the 3 "value" methods
-      const valueRows = rows.filter(r => r.kind === "value" && r.value != null);
-      const bestValue = valueRows.length ? Math.min(...valueRows.map(r => r.value)) : null;
+      const taskData = f6[panelKey][task];
+      // Best = lowest mean among methods that have a value
+      const vals = METHOD_ORDER.map(m => taskData[m]?.mean).filter(v => v != null);
+      const best = vals.length ? Math.min(...vals) : null;
 
       const taskWrap = document.createElement("div");
       taskWrap.innerHTML = `<h4 class="fig6-task">${FIG7_TASK_TITLES[task]}</h4>`;
-      for (const r of rows) {
-        const el = document.createElement("div");
-        el.className = "fig6-row";
-        if (r.kind === "value") {
-          const truncated = r.value > FIG6_MAX;
-          const pct = Math.min(100, (r.value / FIG6_MAX) * 100);
-          const isBest = r.value === bestValue;
-          if (isBest) el.classList.add("is-best");
-          // Error bar (whisker) when err known
-          let ciHTML = "";
-          if (r.err != null) {
-            const lo = Math.max(0, r.value - r.err);
-            const hi = Math.min(FIG6_MAX, r.value + r.err);
-            const loPct = (lo / FIG6_MAX) * 100;
-            const hiPct = (hi / FIG6_MAX) * 100;
-            ciHTML = `<div class="fig6-row__ci" style="left:${loPct}%; right:${100 - hiPct}%;"
-                           title="±${r.err.toFixed(3)}"></div>`;
-          }
-          el.innerHTML = `
-            <div class="fig6-row__label">${FIG7_LABELS[r.method] || r.method}</div>
-            <div class="fig6-row__track" style="--bar-pct:${pct}"
-                 title="value ${r.value.toFixed(3)}${r.err != null ? ' ± '+r.err.toFixed(3) : ''}${truncated ? ' (truncated at 0.05)' : ''}">
-              <div class="fig6-row__fill ${truncated ? 'fig6-row__fill--truncated' : ''}"
-                   style="background: var(--color-${r.method.replaceAll('_','-')}); width:${pct}%"></div>
-              ${ciHTML}
-              <span class="fig6-row__value">${r.value.toFixed(3)}</span>
-            </div>`;
-        } else {
-          const [lo, hi] = r.range;
-          const left  = Math.min(100, (lo / FIG6_MAX) * 100);
-          const right = Math.min(100, (hi / FIG6_MAX) * 100);
-          el.innerHTML = `
-            <div class="fig6-row__label">HealthGen (range)</div>
-            <div class="fig6-row__track" title="reported range: ${lo.toFixed(2)}–${hi.toFixed(2)}">
-              <div class="fig6-row__range" style="left:${left}%; right:${100-right}%"></div>
-            </div>`;
+      for (const method of METHOD_ORDER) {
+        const entry = taskData[method];
+        if (!entry) continue;
+        const v = entry.mean, err = entry.std;
+        const truncated = v > FIG6_MAX;
+        const pct = Math.min(100, (v / FIG6_MAX) * 100);
+        const isBest = v === best;
+        let ciHTML = "";
+        if (err != null) {
+          const lo = Math.max(0, v - err);
+          const hi = Math.min(FIG6_MAX, v + err);
+          const loPct = (lo / FIG6_MAX) * 100;
+          const hiPct = (hi / FIG6_MAX) * 100;
+          ciHTML = `<div class="fig6-row__ci" style="left:${loPct}%; right:${100 - hiPct}%;" title="±${err.toFixed(3)}"></div>`;
         }
+        const el = document.createElement("div");
+        el.className = "fig6-row" + (isBest ? " is-best" : "");
+        el.innerHTML = `
+          <div class="fig6-row__label">${FIG7_LABELS[method] || humanize(method)}</div>
+          <div class="fig6-row__track" style="--bar-pct:${pct}"
+               title="value ${v.toFixed(3)}${err != null ? ' ± ' + err.toFixed(3) : ''}${truncated ? ' (truncated at 0.05)' : ''}">
+            <div class="fig6-row__fill ${truncated ? 'fig6-row__fill--truncated' : ''}"
+                 style="background: var(--color-${method.replaceAll('_', '-')}); width:${pct}%"></div>
+            ${ciHTML}
+            <span class="fig6-row__value">${v.toFixed(3)}</span>
+          </div>`;
         taskWrap.appendChild(el);
       }
       panel.appendChild(taskWrap);
     }
     mount.appendChild(panel);
   }
-}
-
-// Helpers — each returns { value, err } (err may be null).
-function pickTA(task, panel, t1) {
-  const key = `${task}_timeautodiff`;
-  if (t1[key]) return { value: t1[key][panel], err: t1[key][`${panel}_err`] };
-  return fallbackTA(task, panel);
-}
-function fallbackTA(task, panel) {
-  const map = {
-    delta_tstr: { eicu_mortality24: 0.011, eicu_los24: 0.010, mimic_mortality24: 0.006, mimic_los24: 0.009 },
-    delta_trts: { eicu_mortality24: 0.039, eicu_los24: 0.026, mimic_mortality24: 0.017, mimic_los24: 0.030 },
-  };
-  return { value: map[panel][task], err: null };
-}
-function pickTD(task, panel) {
-  const key = `${task}_timediff`;
-  // Use Table 1 when available (only eicu_mortality24_timediff published)
-  return {
-    delta_tstr: { eicu_mortality24: { value: 0.003, err: 0.002 }, eicu_los24: { value: 0.005, err: null },
-                  mimic_mortality24: { value: 0.004, err: null }, mimic_los24: { value: 0.009, err: null } },
-    delta_trts: { eicu_mortality24: { value: 0.019, err: 0.003 }, eicu_los24: { value: 0.015, err: null },
-                  mimic_mortality24: { value: 0.008, err: null }, mimic_los24: { value: 0.023, err: null } },
-  }[panel][task];
-}
-function pickEnhanced(task, panel) {
-  const map = {
-    delta_tstr: { eicu_mortality24: 0.011, eicu_los24: 0.010, mimic_mortality24: 0.006, mimic_los24: 0.009 },
-    delta_trts: { eicu_mortality24: 0.009, eicu_los24: 0.003, mimic_mortality24: 0.006, mimic_los24: 0.014 },
-  };
-  return { value: map[panel][task], err: null };
 }
 
 /* Subgroup Explorer ------------------------------------------------------ */
