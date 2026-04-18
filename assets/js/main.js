@@ -20,17 +20,20 @@ async function renderFigure7() {
   if (!mount) return;
   const res = await fetch("data/results.json").then(r => r.json());
   const fig7 = res.figure7;
-  const fig7CIs = res.figure7_cis || {};  // optional; may be absent
+  // Use figure7_stds for paper-consistent symmetric whiskers; fall back to cis.
+  const fig7Stds = res.figure7_stds || {};
+  const fig7CIs  = res.figure7_cis  || {};  // backward-compat fallback
 
   const maxOverall = Math.max(
     ...Object.values(fig7).flatMap(d => FIG7_ORDER.map(m => d[m]))
   );
-  // Allow headroom for the whisker and the outside value
+  // Allow headroom for whiskers and outside value labels
   const axisMax = maxOverall * 1.2;
 
   for (const task of Object.keys(FIG7_TASK_TITLES)) {
-    const data = fig7[task];
-    const cis = fig7CIs[task] || {};
+    const data  = fig7[task];
+    const stds  = fig7Stds[task] || {};
+    const cis   = fig7CIs[task]  || {};
     const minVal = Math.min(...FIG7_ORDER.map(m => data[m]));
     const panel = document.createElement("div");
     panel.className = "fig7-panel";
@@ -38,30 +41,58 @@ async function renderFigure7() {
                        <div class="fig7-bars"></div>`;
     const bars = panel.querySelector(".fig7-bars");
     for (const method of FIG7_ORDER) {
-      const v = data[method];
+      const v   = data[method];
       const pct = Math.min(100, (v / axisMax) * 100);
+      const isBest = v === minVal;
       const bar = document.createElement("div");
-      bar.className = "fig7-bar" + (v === minVal ? " is-best" : "");
+      bar.className = "fig7-bar" + (isBest ? " is-best" : "");
       bar.dataset.method = method;
 
-      // Optional CI whisker
+      // Compute symmetric half-error: prefer figure7_stds; fall back to CI span/2.
+      let halfErr = null;
+      if (stds[method] != null) {
+        halfErr = stds[method];
+      } else {
+        const ci = cis[method];
+        if (ci && Array.isArray(ci) && ci.length === 2) {
+          halfErr = (ci[1] - ci[0]) / 2;
+        }
+      }
+
+      // Symmetric whisker centred on bar value v.
       let ciHTML = "";
-      const ci = cis[method];
       let valuePos = pct;
-      if (ci && Array.isArray(ci) && ci.length === 2) {
-        const loPct = Math.min(100, (ci[0] / axisMax) * 100);
-        const hiPct = Math.min(100, (ci[1] / axisMax) * 100);
+      if (halfErr != null && halfErr > 0) {
+        const lo    = Math.max(0, v - halfErr);
+        const hi    = v + halfErr;
+        const loPct = (lo / axisMax) * 100;
+        const hiPct = Math.min(100, (hi / axisMax) * 100);
         ciHTML = `<div class="fig7-bar__ci" style="left:${loPct}%; right:${100 - hiPct}%;"
-                       title="95% CI [${ci[0].toFixed(3)}–${ci[1].toFixed(3)}]"></div>`;
+                       title="±${halfErr.toFixed(3)}"></div>`;
         valuePos = Math.min(88, hiPct + 1);
       }
 
-      const starHTML = v === minVal ? `<span class="fig7-bar__star" aria-hidden="true">★</span>` : "";
+      // Star: inside fill when bar is wide enough; outside (teal) when narrow.
+      let starHTML = "";
+      if (isBest) {
+        if (pct >= 12) {
+          starHTML = `<span class="fig7-bar__star" aria-hidden="true">★</span>`;
+        }
+      }
+      const outsideStar = isBest && pct < 12
+        ? `<span class="fig7-bar__star fig7-bar__star--outside" aria-hidden="true"
+               style="left:calc(${pct} * 1% + 4px)">★</span>`
+        : "";
+
+      const titleStr = halfErr != null
+        ? `error ${v.toFixed(3)} · ±${halfErr.toFixed(3)}`
+        : `error ${v.toFixed(3)}`;
 
       bar.innerHTML = `
         <div class="fig7-bar__label">${FIG7_LABELS[method]}</div>
-        <div class="fig7-bar__track" style="--bar-pct:${pct}; --value-pos:${valuePos}" title="error ${v.toFixed(3)}${ci ? ' · 95% CI ['+ci[0].toFixed(3)+'–'+ci[1].toFixed(3)+']' : ''}">
+        <div class="fig7-bar__track" style="--bar-pct:${pct}; --value-pos:${valuePos}" title="${titleStr}">
           <div class="fig7-bar__fill" style="width:${pct}%">${starHTML}</div>
+          ${outsideStar}
           ${ciHTML}
           <span class="fig7-bar__value">${v.toFixed(3)}</span>
         </div>`;
@@ -185,17 +216,29 @@ async function renderFigure6() {
         const v = entry.mean, err = entry.std;
         const pct = Math.min(100, (v / axisMax) * 100);
         const isBest = v === best;
+
+        // Symmetric whisker: both sides = err around v; skip if err == 0 or null.
         let ciHTML = "";
         let valuePos = pct;
-        if (err != null) {
-          const lo = Math.max(0, v - err);
-          const hi = Math.min(axisMax, v + err);
-          const loPct = (lo / axisMax) * 100;
-          const hiPct = (hi / axisMax) * 100;
+        if (err != null && err > 0) {
+          const loPct = Math.max(0, (v - err) / axisMax * 100);
+          const hiPct = Math.min(100, (v + err) / axisMax * 100);
           ciHTML = `<div class="fig6-row__ci" style="left:${loPct}%; right:${100 - hiPct}%;" title="±${err.toFixed(3)}"></div>`;
           valuePos = Math.min(88, hiPct + 1);
         }
-        const starHTML = isBest ? `<span class="fig6-row__star" aria-hidden="true">★</span>` : "";
+
+        // Star: inside fill when wide enough; outside (teal) when narrow.
+        let starHTML = "";
+        let outsideStar = "";
+        if (isBest) {
+          if (pct >= 12) {
+            starHTML = `<span class="fig6-row__star" aria-hidden="true">★</span>`;
+          } else {
+            outsideStar = `<span class="fig6-row__star fig6-row__star--outside" aria-hidden="true"
+                 style="left:calc(${pct} * 1% + 4px)">★</span>`;
+          }
+        }
+
         const el = document.createElement("div");
         el.className = "fig6-row" + (isBest ? " is-best" : "");
         el.dataset.method = method;
@@ -205,6 +248,7 @@ async function renderFigure6() {
                title="value ${v.toFixed(3)}${err != null ? ' ± ' + err.toFixed(3) : ''}">
             <div class="fig6-row__fill"
                  style="background: var(--color-${method.replaceAll('_', '-')}); width:${pct}%">${starHTML}</div>
+            ${outsideStar}
             ${ciHTML}
             <span class="fig6-row__value">${v.toFixed(3)}</span>
           </div>`;
@@ -369,24 +413,44 @@ function renderExplorer() {
     const isBest = mdata.error === bestError;
     if (isBest) bar.classList.add("is-best");
 
+    // Symmetric whisker: halfErr = (ci[1]-ci[0])/2, centred on mdata.error.
     let ciHTML = "";
     let valuePos = pct;
+    let halfErr = null;
     if (mdata.ci && Array.isArray(mdata.ci) && mdata.ci.length === 2) {
-      const loPct = Math.min(100, (mdata.ci[0] / axisMax) * 100);
-      const hiPct = Math.min(100, (mdata.ci[1] / axisMax) * 100);
-      ciHTML = `<div class="explorer__bar__ci" style="left:${loPct}%; right:${100 - hiPct}%;"
-                     title="95% CI [${mdata.ci[0].toFixed(3)}–${mdata.ci[1].toFixed(3)}]"></div>`;
-      valuePos = Math.min(88, mdata.ci[1] / axisMax * 100 + 1);
+      halfErr = (mdata.ci[1] - mdata.ci[0]) / 2;
     }
-    const starHTML = isBest ? `<span class="explorer__bar__star" aria-hidden="true">★</span>` : "";
-    const title = mdata.ci
-      ? `error ${mdata.error.toFixed(3)} · 95% CI [${mdata.ci[0].toFixed(3)}–${mdata.ci[1].toFixed(3)}]`
+    if (halfErr != null && halfErr > 0) {
+      const lo    = Math.max(0, mdata.error - halfErr);
+      const hi    = mdata.error + halfErr;
+      const loPct = (lo / axisMax) * 100;
+      const hiPct = Math.min(100, (hi / axisMax) * 100);
+      ciHTML = `<div class="explorer__bar__ci" style="left:${loPct}%; right:${100 - hiPct}%;"
+                     title="±${halfErr.toFixed(3)}"></div>`;
+      valuePos = Math.min(88, hiPct + 1);
+    }
+
+    // Star: inside fill when wide enough; outside (teal) when narrow.
+    let starHTML = "";
+    let outsideStar = "";
+    if (isBest) {
+      if (pct >= 12) {
+        starHTML = `<span class="explorer__bar__star" aria-hidden="true">★</span>`;
+      } else {
+        outsideStar = `<span class="explorer__bar__star explorer__bar__star--outside" aria-hidden="true"
+               style="left:calc(${pct} * 1% + 4px)">★</span>`;
+      }
+    }
+
+    const titleStr = halfErr != null
+      ? `error ${mdata.error.toFixed(3)} · ±${halfErr.toFixed(3)}`
       : `error ${mdata.error.toFixed(3)}`;
 
     bar.innerHTML = `
       <div class="explorer__bar__label">${FIG7_LABELS[method] || humanize(method)}</div>
-      <div class="explorer__bar__track" style="--bar-pct:${pct}; --value-pos:${valuePos}" title="${title}">
+      <div class="explorer__bar__track" style="--bar-pct:${pct}; --value-pos:${valuePos}" title="${titleStr}">
         <div class="explorer__bar__fill" style="width:${pct}%">${starHTML}</div>
+        ${outsideStar}
         ${ciHTML}
         <span class="explorer__bar__value">${mdata.error.toFixed(3)}</span>
       </div>`;

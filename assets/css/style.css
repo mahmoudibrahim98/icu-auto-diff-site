@@ -600,3 +600,14 @@ pre  { font-family: var(--font-mono); background: var(--color-code-bg); padding:
   pointer-events: none;
 }
 .fig6-row[data-method="healthgen"].is-best .fig6-row__star { color: #fff; }
+
+/* Star fallback for narrow bars: render outside the fill in accent color.
+   The element is a sibling of the fill (child of track), so left is in
+   track-coordinate space (var(--bar-pct) already set on the track). */
+.fig7-bar__star--outside,
+.fig6-row__star--outside,
+.explorer__bar__star--outside {
+  left: calc(var(--bar-pct, 0) * 1% + 4px) !important;
+  color: var(--color-accent) !important;
+  font-weight: 700;
+}
