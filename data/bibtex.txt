@@ -1,0 +1,9 @@
+@misc{ibrahim2025enabling,
+  title         = {Enabling Granular Subgroup Level Model Evaluations by Generating Synthetic Medical Time Series},
+  author        = {Ibrahim, Mahmoud and Elen, Bart and Sun, Chang and Ertaylan, G{\"o}khan and Dumontier, Michel},
+  year          = {2025},
+  eprint        = {2510.19728},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.LG},
+  howpublished  = {SynDAiTE Workshop @ ECML PKDD 2025}
+}

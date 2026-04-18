@@ -1,0 +1,22 @@
+{
+  "title": "Enabling Granular Subgroup Level Model Evaluations by Generating Synthetic Medical Time Series",
+  "venue": "SynDAiTE Workshop @ ECML PKDD 2025",
+  "authors": [
+    {"name": "Mahmoud Ibrahim",  "affiliations": [1, 2, 3], "corresponding": true,
+     "email": "mahmoud.ibrahim@vito.be"},
+    {"name": "Bart Elen",        "affiliations": [3]},
+    {"name": "Chang Sun",        "affiliations": [1, 2]},
+    {"name": "Gökhan Ertaylan",  "affiliations": [3]},
+    {"name": "Michel Dumontier", "affiliations": [1, 2]}
+  ],
+  "affiliations": {
+    "1": "Institute of Data Science, Faculty of Science and Engineering, Maastricht University, Maastricht, The Netherlands",
+    "2": "Department of Advanced Computing Sciences, Faculty of Science and Engineering, Maastricht University, Maastricht, The Netherlands",
+    "3": "VITO, Belgium"
+  },
+  "arxiv_id": "2510.19728",
+  "arxiv_url": "https://arxiv.org/abs/2510.19728",
+  "github_url": "https://github.com/mahmoudibrahim98/icu-auto-diff",
+  "summary": "Clinical ML models are usually evaluated on whatever real test data is available — which leaves minority subgroups with dozens of samples and wildly uncertain metrics. We show how to train generative models whose synthetic cohorts are trustworthy enough to serve as the test set itself, even for fine-grained demographic intersections.",
+  "abstract": "We present a novel framework for leveraging synthetic ICU time-series data not only to train but also to rigorously and trustworthily evaluate predictive models, both at the population level and within fine-grained demographic subgroups. Building on prior diffusion and VAE-based generators (TimeDiff, HealthGen, TimeAutoDiff), we introduce Enhanced TimeAutoDiff, which augments the latent diffusion objective with distribution-alignment penalties. We extensively benchmark all models on MIMIC-III and eICU, on 24-hour mortality and binary length-of-stay tasks. Our results show that Enhanced TimeAutoDiff reduces the gap between real-on-synthetic and real-on-real evaluation (TRTS gap) by over 70%, achieving ΔTRTS ≤ 0.014 AUROC, while preserving training utility (ΔTSTR ≈ 0.01). Crucially, for 32 intersectional subgroups, large synthetic cohorts cut subgroup-level AUROC estimation error by up to 50% relative to small real test sets, and outperform them in 72–84% of subgroups. This work provides a practical, privacy-preserving roadmap for trustworthy, granular model evaluation in critical care, enabling robust and reliable performance analysis across diverse patient populations without exposing sensitive EHR data, contributing to the overall trustworthiness of Medical AI."
+}
