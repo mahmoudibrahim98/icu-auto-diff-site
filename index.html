@@ -108,7 +108,54 @@
   </p>
 </section>
 
-    <section id="method" class="section"><!-- Task 9 --></section>
+    <section id="method" class="section method">
+  <h2>Method</h2>
+
+  <p>
+    TimeAutoDiff splits generation into two stages: a β-VAE that compresses
+    mixed-type time series into a latent space, and a conditional diffusion
+    model that learns to sample from that latent space given demographic and
+    outcome conditions. Our contribution — Enhanced TimeAutoDiff — adds a pair
+    of distribution-alignment penalties to both stages so that evaluation on
+    synthetic cohorts matches evaluation on real data.
+  </p>
+
+  <ol class="method-steps">
+    <li class="method-step">
+      <span class="method-step__n">1</span>
+      <div class="method-step__body">
+        <h3>β-VAE encode</h3>
+        <p>A GRU autoencoder maps continuous vitals and categorical masks to a latent <code>z</code> via <code>L_recon + β·L_KLD</code>.</p>
+      </div>
+    </li>
+    <li class="method-step">
+      <span class="method-step__n">2</span>
+      <div class="method-step__body">
+        <h3>Conditional latent diffusion</h3>
+        <p>A bidirectional RNN denoises <code>z</code> conditioned on age group, sex, ethnicity, and outcome. Classifier-free guidance balances adherence to conditions against sample diversity.</p>
+      </div>
+    </li>
+    <li class="method-step">
+      <span class="method-step__n">3</span>
+      <div class="method-step__body">
+        <h3>Distribution-alignment penalties</h3>
+        <p>Both stages are augmented with an MMD loss (RBF kernel) that aligns real and synthetic latent distributions, and a consistency loss that keeps outputs stable under small input perturbations.</p>
+      </div>
+    </li>
+  </ol>
+
+  <p>
+    The result is a generator whose synthetic ICU cohorts can stand in for
+    real test data when evaluating a downstream predictor — even for a
+    demographic intersection with fewer than a hundred real patients.
+  </p>
+
+  <figure class="method-figure">
+    <img src="assets/img/architecture.png"
+         alt="Workflow diagram. Real ICU data is split into training, holdout, and holdout-validation subsets. A generative model is trained on the training split to produce synthetic data, which is then evaluated along two axes: fidelity (intrinsic comparison to real data) and utility (extrinsic evaluation via downstream classifier performance).">
+    <figcaption>Fig. 1 (from the paper). Workflow for generative model training and evaluation of synthetic ICU data.</figcaption>
+  </figure>
+</section>
     <section id="results" class="section">
       <div id="figure7"><!-- Task 10 --></div>
       <div id="table2"><!-- Task 11 --></div>
