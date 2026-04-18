@@ -1,19 +1,23 @@
-"""Compute Figure 7 CIs and point estimates across all 4 data×task combos.
+"""Compute Figure 7 stddevs (across-run variance) for all 4 data×task combos.
 
-For each of the 4 tasks and each method, we compute:
-  - Per-subgroup error: ε(sg) = |AUROC_oracle(sg) - AUROC_method(sg)|
-    (where each is the mean across repetitions for that subgroup).
-  - Point estimate: mean of the 32 subgroup errors.
-  - 95% bootstrap CI on that mean.
+For each of the 4 tasks and each method, the pipeline was run 25 times
+(5 synth_data_index × 5 model seeds).  For each run (synth_data_index, model)
+we compute:
+
+    run_error = mean over subgroups of |oracle_mean(sg) - method_auroc(run, sg)|
+
+The point estimate is the mean of the 25 run_errors; the stddev is their
+sample std (ddof=1).  This matches the paper's Fig 7 error-bar methodology
+(across-run variance, NOT bootstrap CI across subgroups).
 
 Results are stored in results.json under:
-  - figure7_points[task][method] = float   (computed from CSVs)
-  - figure7_cis[task][method]    = [lo, hi]
+  - figure7_points[task][method] = float   (mean across 25 runs, for reference)
+  - figure7_stds[task][method]   = float   (stddev across 25 runs, paper-consistent)
+  - figure7_cis[task][method]    = [lo, hi] (kept for backward compat; now symmetric)
 
 NOTE: The existing figure7[task][method] values are the paper-text numbers from
-Section 5.3 and are left unchanged. The JS renderer uses figure7_points when
-present (they come from the same data as the paper's computation), and falls
-back to figure7 (paper text) if absent.
+Section 5.3 and are left unchanged.  The JS renderer uses figure7[task] for bar
+height (citation integrity) and figure7_stds for whisker half-width.
 
 Source files
 ------------
@@ -75,17 +79,6 @@ EVAL_TO_METHOD = {
 ALL_METHODS = ("test", "timeautodiff", "enhanced_timeautodiff", "timediff")
 
 
-def _bootstrap_ci(values: np.ndarray, n: int = 2000,
-                  alpha: float = 0.05) -> Tuple[float, float]:
-    rng = np.random.default_rng(42)
-    means = np.array([
-        rng.choice(values, size=values.size, replace=True).mean()
-        for _ in range(n)
-    ])
-    return (float(np.percentile(means, 100 * alpha / 2)),
-            float(np.percentile(means, 100 * (1 - alpha / 2))))
-
-
 def _load_df(path: Optional[Path]) -> Optional[pd.DataFrame]:
     if path is None or not path.exists():
         return None
@@ -99,14 +92,26 @@ def _load_df(path: Optional[Path]) -> Optional[pd.DataFrame]:
     return df
 
 
-def compute_task_cis(
+def _oracle_mean_by_subgroup(df: pd.DataFrame) -> pd.Series:
+    """Return mean oracle AUROC per subgroup, pooled across all runs."""
+    return (
+        df[df["evaluated_on"] == "oracle"]
+        .groupby("subgroup")["auroc"].mean()
+    )
+
+
+def compute_task_stds(
     path_a: Optional[Path],
     path_b: Optional[Path],
-) -> Tuple[Dict[str, float], Dict[str, Tuple[float, float]]]:
-    """Return (points, cis) for one task.
+) -> Tuple[Dict[str, float], Dict[str, float]]:
+    """Return (points, stds) for one task.
 
-    points: {method: mean_error}
-    cis:    {method: (lo, hi)}
+    points: {method: mean_error_across_runs}
+    stds:   {method: stddev_across_runs}
+
+    Each "run" is identified by (synth_data_index, model).  For each run we
+    compute the mean-absolute-deviation across subgroups; then aggregate those
+    run-level scalars into a mean and stddev.
     """
     df_a = _load_df(path_a)
     df_b = _load_df(path_b)
@@ -117,12 +122,10 @@ def compute_task_cis(
     # Merge, dropping ignored rows
     frames = []
     if df_a is not None:
-        df_a = df_a[df_a["evaluated_on"] != "__ignore__"].copy()
         df_a = df_a[df_a["evaluated_on"] != "random_all_subgroups"].copy()
         df_a["_src"] = "A"
         frames.append(df_a)
     if df_b is not None:
-        df_b = df_b[df_b["evaluated_on"] != "__ignore__"].copy()
         df_b = df_b[df_b["evaluated_on"] != "random_all_subgroups"].copy()
         df_b["_src"] = "B"
         frames.append(df_b)
@@ -130,20 +133,16 @@ def compute_task_cis(
     df = pd.concat(frames, ignore_index=True)
     df = df.dropna(subset=["auroc"])
 
-    # Oracle mean per subgroup (all sources together)
-    oracle_by_sg = (
-        df[df["evaluated_on"] == "oracle"]
-        .groupby("subgroup")["auroc"].mean()
-    )
+    # Oracle mean per subgroup (all sources, all runs pooled)
+    oracle_by_sg = _oracle_mean_by_subgroup(df)
 
     points: Dict[str, float] = {}
-    cis: Dict[str, Tuple[float, float]] = {}
+    stds: Dict[str, float] = {}
 
     for method in ALL_METHODS:
-        # Choose the correct evaluated_on label for this method.
-        # For timeautodiff: prefer baseline (Dir A) rows.
+        # Select rows for this method using the correct evaluated_on labels.
         if method == "timeautodiff":
-            # Try baseline first
+            # Prefer baseline (Dir A) rows; fall back to Dir B
             rows_df = df[df["evaluated_on"] == "synthetic_timeautodiff_baseline"]
             if rows_df.empty:
                 rows_df = df[df["evaluated_on"] == "synthetic_timeautodiff"]
@@ -156,17 +155,35 @@ def compute_task_cis(
         else:
             continue
 
-        method_means = rows_df.groupby("subgroup")["auroc"].mean()
-        sgs = oracle_by_sg.index.intersection(method_means.index)
-        if len(sgs) == 0:
+        if rows_df.empty:
             continue
 
-        errors = (oracle_by_sg.loc[sgs] - method_means.loc[sgs]).abs().to_numpy()
-        lo, hi = _bootstrap_ci(errors)
-        points[method] = round(float(errors.mean()), 4)
-        cis[method] = (round(lo, 4), round(hi, 4))
+        # Compute one run-level error scalar per (synth_data_index, model).
+        run_errors: List[float] = []
+        for (_sidx, _midx), run_rows in rows_df.groupby(
+            ["synth_data_index", "model"]
+        ):
+            # Mean oracle AUROC per subgroup for this run's subgroups.
+            sgs = oracle_by_sg.index.intersection(run_rows["subgroup"].unique())
+            if len(sgs) == 0:
+                continue
+            # Per-subgroup method AUROC for this run (single mean; usually one
+            # row per subgroup, but average across any duplicates).
+            method_by_sg = run_rows.groupby("subgroup")["auroc"].mean()
+            run_error = float(
+                (oracle_by_sg.loc[sgs] - method_by_sg.loc[sgs]).abs().mean()
+            )
+            run_errors.append(run_error)
 
-    return points, cis
+        if len(run_errors) == 0:
+            continue
+
+        arr = np.array(run_errors)
+        points[method] = round(float(arr.mean()), 4)
+        ddof = 1 if len(arr) > 1 else 0
+        stds[method] = round(float(arr.std(ddof=ddof)), 4)
+
+    return points, stds
 
 
 def main(argv: Optional[List[str]] = None) -> int:
@@ -188,24 +205,40 @@ def main(argv: Optional[List[str]] = None) -> int:
 
     results = json.loads(args.results.read_text())
     results.setdefault("figure7_points", {})
+    results.setdefault("figure7_stds", {})
+    # Keep figure7_cis for backward compat (now written as symmetric ± std)
     results.setdefault("figure7_cis", {})
+
+    # Print header for sanity-check table
+    print(f"\n{'Task':<22} {'Method':<24} {'Std':>8}  {'Point':>8}")
+    print("-" * 66)
 
     for task_key, csv_suffix in TASK_CSV.items():
         path_a = (dir_a / f"all_results_{csv_suffix}.csv") if dir_a else None
         path_b = (dir_b / f"all_results_{csv_suffix}.csv") if dir_b else None
 
-        points, cis = compute_task_cis(path_a, path_b)
+        points, stds = compute_task_stds(path_a, path_b)
         if not points:
             print(f"  {task_key}: no data found, skipping.")
             continue
 
         results["figure7_points"][task_key] = points
-        results["figure7_cis"][task_key] = {m: list(v) for m, v in cis.items()}
-        print(f"  {task_key}: methods={sorted(points.keys())}, "
-              f"points={points}")
+        results["figure7_stds"][task_key] = stds
+
+        # Backward-compat: write symmetric CI as [point-std, point+std]
+        cis: Dict[str, List[float]] = {}
+        for m, pt in points.items():
+            s = stds.get(m, 0.0)
+            cis[m] = [round(pt - s, 4), round(pt + s, 4)]
+        results["figure7_cis"][task_key] = cis
+
+        for m in sorted(stds.keys()):
+            print(f"  {task_key:<20} {m:<24} {stds[m]:>8.4f}  {points[m]:>8.4f}")
+
+    print("-" * 66)
 
     args.results.write_text(json.dumps(results, indent=2, sort_keys=True) + "\n")
-    print(f"wrote figure7_points + figure7_cis into {args.results}")
+    print(f"\nWrote figure7_points + figure7_stds + figure7_cis into {args.results}\n")
     return 0
 
 
