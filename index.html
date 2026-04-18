@@ -170,7 +170,52 @@
     Enhanced TimeAutoDiff (★) achieves the lowest error on every Data × Task.
   </p>
 </div>
-      <div id="table2"><!-- Task 11 --></div>
+      <div id="table2" class="results-block">
+  <h2>How often does synthetic beat real-test? (Table 2)</h2>
+  <p class="results-block__lede">
+    Percentage of the 32 intersectional subgroups in which the synthetic
+    cohort's evaluation error is strictly smaller than the small real-test
+    subset's error. Higher is better.
+  </p>
+
+  <table data-enhance="true" class="tbl">
+    <thead>
+      <tr>
+        <th>Dataset</th>
+        <th>Task</th>
+        <th data-col="ta" data-direction="higher">TimeAutoDiff</th>
+        <th data-col="td" data-direction="higher">TimeDiff</th>
+        <th data-col="ta_plus" data-direction="higher">Enhanced TimeAutoDiff</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr data-group="eicu_mortality24">
+        <td>eICU</td><td>Mortality 24h</td>
+        <td data-col="ta" data-value="48"><span class="val">48%</span></td>
+        <td data-col="td" data-value="60"><span class="val">60%</span></td>
+        <td data-col="ta_plus" data-value="76"><span class="val">76%</span></td>
+      </tr>
+      <tr data-group="eicu_los24">
+        <td>eICU</td><td>LOS &gt; 3d</td>
+        <td data-col="ta" data-value="44"><span class="val">44%</span></td>
+        <td data-col="td" data-value="52"><span class="val">52%</span></td>
+        <td data-col="ta_plus" data-value="72"><span class="val">72%</span></td>
+      </tr>
+      <tr data-group="mimic_mortality24">
+        <td>MIMIC-III</td><td>Mortality 24h</td>
+        <td data-col="ta" data-value="68"><span class="val">68%</span></td>
+        <td data-col="td" data-value="68"><span class="val">68%</span></td>
+        <td data-col="ta_plus" data-value="84"><span class="val">84%</span></td>
+      </tr>
+      <tr data-group="mimic_los24">
+        <td>MIMIC-III</td><td>LOS &gt; 3d</td>
+        <td data-col="ta" data-value="72"><span class="val">72%</span></td>
+        <td data-col="td" data-value="56"><span class="val">56%</span></td>
+        <td data-col="ta_plus" data-value="76"><span class="val">76%</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
       <div id="figure6"><!-- Task 12 --></div>
       <div id="subgroup-explorer"><!-- Task 13 and 14 --></div>
     </section>

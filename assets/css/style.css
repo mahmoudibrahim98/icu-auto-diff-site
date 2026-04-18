@@ -263,3 +263,33 @@ pre  { font-family: var(--font-mono); background: var(--color-code-bg); padding:
   border-radius: var(--radius-2);
 }
 .fig7-bar.is-best .fig7-bar__label::before { content: "★ "; color: var(--color-accent); }
+
+/* Interactive table ------------------------------------------------------- */
+.tbl {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: var(--space-6);
+  font-variant-numeric: tabular-nums;
+}
+.tbl th, .tbl td { text-align: left; padding: var(--space-3) var(--space-4); border-bottom: 1px solid var(--color-rule); }
+.tbl th { font-size: 0.8125rem; font-weight: 600; color: var(--color-ink-soft); text-transform: uppercase; letter-spacing: 0.02em; }
+
+.tbl td[data-value] {
+  position: relative;
+  background:
+    linear-gradient(to right,
+      var(--color-accent-soft) 0,
+      var(--color-accent-soft) calc(var(--bar-pct) * 1%),
+      transparent calc(var(--bar-pct) * 1%));
+}
+.tbl td[data-value].is-best { background:
+    linear-gradient(to right,
+      var(--color-accent) 0,
+      var(--color-accent) calc(var(--bar-pct) * 1%),
+      transparent calc(var(--bar-pct) * 1%));
+  color: #fff;
+}
+.tbl td[data-value] .val { position: relative; z-index: 1; font-family: var(--font-mono); }
+
+.tbl tr.is-hovered { background: #f8fafb; }
+.tbl td.is-hovered-col { box-shadow: inset 0 0 0 9999px rgba(43, 122, 120, 0.04); }
